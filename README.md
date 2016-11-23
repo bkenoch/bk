@@ -2,8 +2,8 @@
 
 ## Heroku git path
 ```
-heroku mysql
-https://git.heroku.com/cn47499.git
+heroku sqlite
+https://git.heroku.com/bk1123.git
 ```
 ## One click
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
@@ -16,5 +16,5 @@ git commit -am "heroku"
 git push heroku master <---push to heroku
 heroku logs --tail   <---see push logs
 ```
-# [ API文件 ](https://cn27529.gitbooks.io/mycloudlife-api/content/)  
-# [ DB文件 ](https://cn27529.gitbooks.io/mycloudlife-book/content/)  
+# [ API文件 ](https://cn27529.gitbooks.io/bk-api/content/)  
+# [ DB文件 ](https://cn27529.gitbooks.io/bk-db/content/)  
