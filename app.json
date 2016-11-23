@@ -1,7 +1,9 @@
 {
-    "addons": [{
-        "plan": "heroku-postgresql"
-    }],
+    "addons": [
+        {
+            "plan": "heroku-postgresql"
+        }
+    ],
     "buildpacks": [],
     "env": {
         "NODE_ENV": {
@@ -10,6 +12,6 @@
         }
     },
     "formation": {},
-    "name": "bk",
+    "name": "mycloudlife-example",
     "scripts": {}
 }
