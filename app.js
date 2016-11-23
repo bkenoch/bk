@@ -7,6 +7,7 @@ var bodyparser = require('body-parser');
 
 var path = require('path');
 
+
 //var multer = require('multer');
 //app.use(multer({ dest: './uploads/'}));
 
@@ -43,30 +44,30 @@ app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
 //URL位置
 var index = require('./routes/index');
 //var users  = require('./routes/users');
-// var account = require('./routes/account');
-// var profile = require('./routes/profile');
-// var note = require('./routes/note');
-// var photo = require('./routes/photo'); //--------add on 161027
-// var cool = require('cool-ascii-faces');
-// var mail = require('./routes/mail'); //---------add on 161030
-// var member = require('./routes/member'); //---------add on 161107
-// var calendar = require('./routes/calendar'); //---------add on 161110
-// var file = require('./routes/file'); //---------add on 161117
+var account = require('./routes/account');
+var profile = require('./routes/profile');
+var note = require('./routes/note');
+var photo = require('./routes/photo'); //--------add on 161027
+var cool = require('cool-ascii-faces');
+var mail = require('./routes/mail'); //---------add on 161030
+var member = require('./routes/member'); //---------add on 161107
+var calendar = require('./routes/calendar'); //---------add on 161110
+var file = require('./routes/file'); //---------add on 161117
 //var public = require('./routes/public'); //---------add on 161117
 
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// //app.use('/users', users);
-// app.use('/account', account);
-// app.use('/profile', profile);
-// app.use('/note', note);
-// app.use('/photo', photo); //--------add on 161027
-// app.use('/mail', mail); //---------add on 161030
-// app.use('/member', member); //---------add on 161107
-// app.use('/calendar', calendar); //---------add on 161110
-// app.use('/file', file); //---------add on 161117
+//app.use('/users', users);
+app.use('/account', account);
+app.use('/profile', profile);
+app.use('/note', note);
+app.use('/photo', photo); //--------add on 161027
+app.use('/mail', mail); //---------add on 161030
+app.use('/member', member); //---------add on 161107
+app.use('/calendar', calendar); //---------add on 161110
+app.use('/file', file); //---------add on 161117
 
 //http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
 app.use("/public", express.static(path.join(__dirname, 'public')));
