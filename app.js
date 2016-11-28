@@ -1,10 +1,12 @@
-var cool = require('cool-ascii-faces');
-var bodyparser = require('body-parser');
-var path = require('path');
-var favicon = require('serve-favicon'); //--------add on 161124
-
 var express = require('express');
+var cool = require('cool-ascii-faces');
+var favicon = require('serve-favicon'); //--------add on 161124
 var app = express();
+var bodyparser = require('body-parser');
+// app.use(bodyparser.urlencoded({ extended: true }));
+// app.use(bodyparser.json());
+
+var path = require('path');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
