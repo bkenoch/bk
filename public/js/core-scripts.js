@@ -1,11 +1,11 @@
-(function($) {// v5 namespace 
+(function($) {// v5 namespace
 var MK = {
 	api 		: {},
 	ui 			: {},
 	component 	: {},
 };
 
-// Global 
+// Global
 window.MK = MK;
 // http://alistapart.com/article/container-queries-once-more-unto-the-breach
   window.elementQuery = (function() {
@@ -32,7 +32,7 @@ window.MK = MK;
       }
       return name;
     };
-    
+
     // determine the px value for a measurement (e.g. "5em") on a given element
     var convertToPx = function(element, value, units) {
       switch (units) {
@@ -55,7 +55,7 @@ window.MK = MK;
         // or ex/ch (getting accurate measurements is hard)
       }
     };
-    
+
     // determine the size of an em in a given element
     var getEmSize = function(element) {
       if (!element) {
@@ -191,9 +191,9 @@ window.MK = MK;
     // override setTimeout, addEventListener, etc to hit every possible JS entry
     // point? Not really an ideal solution to this.
     // Repaint events in Mozilla?
-    
+
     return elementQuery;
-    
+
   }());
 
   (function(elementQuery) {
@@ -222,9 +222,9 @@ window.MK = MK;
        *   }
        * The `newCss` property contains new CSS rules to use in place of the
        * rules that have element queries -- they replace the queries in selectors
-       * with classes you can turn on and off on the relevant elements. You'll 
+       * with classes you can turn on and off on the relevant elements. You'll
        * want to insert the new CSS content into a <style> element on your page.
-       * 
+       *
        * @param  {String} styleText The text of a style sheet
        * @return {Object}
        */
@@ -233,7 +233,7 @@ window.MK = MK;
         var queries = [];
 
         this.parseText(styleText, {
-          // TODO: don't write a media query to newText if it has no element 
+          // TODO: don't write a media query to newText if it has no element
           // queries. Unfortunately that means tracking nesting level :\
           mediaQuery: function(selector) {
             newText += "\n" + selector + "{";
@@ -250,7 +250,7 @@ window.MK = MK;
             for (var i = 0, len = selector.length; i < len; i++) {
               var single = selector[i];
 
-              // we're going to build up a new selector in `selectorSoFar`, 
+              // we're going to build up a new selector in `selectorSoFar`,
               // replacing the element queries with classes.
               var selectorSoFar = "";
 
@@ -290,24 +290,24 @@ window.MK = MK;
       },
 
       /**
-       * Parse the text of a stylesheet. Usually, you'll want to use 
+       * Parse the text of a stylesheet. Usually, you'll want to use
        * parseStyleText() instead; this is slightly lower-level. You should
-       * provide an object with callbacks for the parsing events you are 
+       * provide an object with callbacks for the parsing events you are
        * interested in:
        *   {
-       *     mediaQuery: 
-       *       The start of a media rule was encountered. Receives everything 
+       *     mediaQuery:
+       *       The start of a media rule was encountered. Receives everything
        *       from the "@" to the "{" as the first argument.
-       *     endMediaQuery: 
+       *     endMediaQuery:
        *       The end of a media rule was encountered. No arguments.
-       *     rule: 
+       *     rule:
        *       A normal style rule was encountered. Receives the parsed selector
        *       as the first argument and the string of properties and values the
        *       rule would apply to matched elements as the second argument.
        *   }
        *
        * There is no return value for this function.
-       * 
+       *
        * @param  {String} styleText The text of a stylesheet to parse.
        * @param  {Object} callbacks An object containing callbacks for the parsing
        *                            events you are interested in.
@@ -317,7 +317,7 @@ window.MK = MK;
 
         // remove comments
         var text = styleText.replace(COMMENT_PATTERN, "");
-        
+
         // iterate through all the CSS rules
         while (match = STATEMENT_END_OR_START_PATTERN.exec(text)) {
           // we found the end of a block
@@ -346,12 +346,12 @@ window.MK = MK;
           }
         }
       },
-      
+
       /**
        * Parse a style rule. This just manages the parsing of a selector and the
        * callback for a rule.
        * @private
-       * 
+       *
        * @param  {String}   selector The selector for the rule
        * @param  {String}   content  The properties and values of the rule.
        * @param  {Function} callback The callback for a parsed rule.
@@ -373,7 +373,7 @@ window.MK = MK;
        *   [["body", [rules], " div", [rules], " a"],
        *    ["body", [rules], " a"]]
        * @private
-       * 
+       *
        * @param  {String} selector The selector to parse.
        * @return {Array}
        */
@@ -389,7 +389,7 @@ window.MK = MK;
         // return null if no selectors had element queries
         return parsed.length ? parsed : null;
       },
-      
+
       /**
        * Parses a single sub-selector. This is used by parseSelector().
        * @private
@@ -426,7 +426,7 @@ window.MK = MK;
        *     value:    the actual value to test for as a number
        *     units:    the units the value is expressed in
        *   }
-       *   
+       *
        * @param  {String} queryString The text of the element query.
        * @return {Array}
        */
@@ -456,9 +456,9 @@ window.MK = MK;
 	 * Helper to enable caching async scripts
 	 * https://api.jquery.com/jquery.getscript/
 	 * http://www.vrdmn.com/2013/07/overriding-jquerygetscript-to-include.html
-	 * 
+	 *
 	 * @param  {String}   script url
-	 * @param  {Function} callback     
+	 * @param  {Function} callback
 	 */
 	$.getCachedScript = function( url ) {
 		var options = {
@@ -466,7 +466,7 @@ window.MK = MK;
 			cache: true,
 			url: url
 		};
-	 
+
 	    // Use $.ajax() since it is more flexible than $.getScript
 	    // Return the jqXHR object so we can chain callbacks
 	  	return $.ajax( options );
@@ -493,7 +493,7 @@ window.MK = MK;
 	    if (!$imgs.length) {return $.Deferred().resolve().promise();}
 
 	    // for each image, add a deferred object to the array which resolves when the image is loaded (or if loading fails)
-	    var dfds = [];  
+	    var dfds = [];
 	    $imgs.each(function(){
 	        var dfd = $.Deferred();
 	        dfds.push(dfd);
@@ -522,14 +522,14 @@ window.MK = MK;
 (function () {
 	var attachEvent = document.attachEvent,
 		stylesCreated = false;
-	
+
 	if (!attachEvent) {
 		var requestFrame = (function(){
 			var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
 								function(fn){ return window.setTimeout(fn, 20); };
 			return function(fn){ return raf(fn); };
 		})();
-		
+
 		var cancelFrame = (function(){
 			var cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame ||
 								   window.clearTimeout;
@@ -553,7 +553,7 @@ window.MK = MK;
 			return element.offsetWidth != element.__resizeLast__.width ||
 						 element.offsetHeight != element.__resizeLast__.height;
 		}
-		
+
 		function scrollListener(e){
 			var element = this;
 			resetTriggers(this);
@@ -568,7 +568,7 @@ window.MK = MK;
 				}
 			});
 		};
-		
+
 		/* Detect CSS Animations support to detect element display/re-attach */
 		var animation = false,
 			animationstring = 'animation',
@@ -579,8 +579,8 @@ window.MK = MK;
 			pfx  = '';
 		{
 			var elm = document.createElement('fakeelement');
-			if( elm.style.animationName !== undefined ) { animation = true; }    
-			
+			if( elm.style.animationName !== undefined ) { animation = true; }
+
 			if( animation === false ) {
 				for( var i = 0; i < domPrefixes.length; i++ ) {
 					if( elm.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
@@ -594,12 +594,12 @@ window.MK = MK;
 				}
 			}
 		}
-		
+
 		var animationName = 'resizeanim';
 		var animationKeyframes = '@' + keyframeprefix + 'keyframes ' + animationName + ' { from { opacity: 0; } to { opacity: 0; } } ';
 		var animationStyle = keyframeprefix + 'animation: 1ms ' + animationName + '; ';
 	}
-	
+
 	function createStyles() {
 		if (!stylesCreated) {
 			//opacity:0 works around a chrome bug https://code.google.com/p/chromium/issues/detail?id=286360
@@ -608,7 +608,7 @@ window.MK = MK;
 					'.resize-triggers, .resize-triggers > div, .contract-trigger:before { content: \" \"; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; } .resize-triggers > div { background: #eee; overflow: auto; } .contract-trigger:before { width: 200%; height: 200%; }',
 				head = document.head || document.getElementsByTagName('head')[0],
 				style = document.createElement('style');
-			
+
 			style.type = 'text/css';
 			if (style.styleSheet) {
 				style.styleSheet.cssText = css;
@@ -620,7 +620,7 @@ window.MK = MK;
 			stylesCreated = true;
 		}
 	}
-	
+
 	window.addResizeListener = function(element, fn){
 		if (attachEvent) element.attachEvent('onresize', fn);
 		else {
@@ -635,7 +635,7 @@ window.MK = MK;
 				element.appendChild(element.__resizeTriggers__);
 				resetTriggers(element);
 				element.addEventListener('scroll', scrollListener, true);
-				
+
 				/* Listen for a css animation to detect element display/re-attach */
 				animationstartevent && element.__resizeTriggers__.addEventListener(animationstartevent, function(e) {
 					if(e.animationName == animationName)
@@ -645,7 +645,7 @@ window.MK = MK;
 			element.__resizeListeners__.push(fn);
 		}
 	};
-	
+
 	window.removeResizeListener = function(element, fn){
 		if (attachEvent) element.detachEvent('onresize', fn);
 		else {
@@ -1623,7 +1623,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 	/**
 	 * MK.core holds most important methods that bootstraps whole application
-	 * 
+	 *
 	 * @type {Object}
 	 */
 	MK.core = {};
@@ -1641,14 +1641,14 @@ window.matchMedia || (window.matchMedia = function() {
 	 * @type {Object}
 	 */
 	var _inQueue = {};
-	
+
 	/**
 	 * Initializes all components in given scope (object or DOM reference) based on data attribute and 'pointer' css class '.js-el'.
 	 * DOM work is reduced by single traversing for pointer class and later filtering through cached object. It expects init() method
 	 * on every component. Component itself should be defined in MK.component namespace and assign to DOM element via data-mk-component.
 	 * Use it once on DOM ready with document as a scope. For partial initialization after ajax operations pass as a scope element
 	 * where new DOM was inserted.
-	 * 
+	 *
 	 * @param  {string|object}
 	 */
 	MK.core.initAll = function( scope ) {
@@ -1685,23 +1685,23 @@ window.matchMedia || (window.matchMedia = function() {
 				names.forEach( function( name ) {
 					init(name, self);
 				});
-			} 
-		}); 
+			}
+		});
 	};
 
 	/**
 	 * Async loader for 3rd party plugins available from within theme or external CDNs / APIs.
-	 * Take one argument as callback which is run when loading is finished. Also keeps track of already loaded scripts 
-	 * and prevent duplication. Holds in queue multiple callbacks that where defined in different places but depend on the 
+	 * Take one argument as callback which is run when loading is finished. Also keeps track of already loaded scripts
+	 * and prevent duplication. Holds in queue multiple callbacks that where defined in different places but depend on the
 	 * same plugin.
 	 *
-	 * TODO: heavy test for multiple dependencies and crosssharing one dependency and different one dependency in queue, 
+	 * TODO: heavy test for multiple dependencies and crosssharing one dependency and different one dependency in queue,
 	 * bulletproof with single dependency
 	 *
 	 * @example MK.core.loadDependencies([MK.core.path.plugins + 'plugin.js'], function() {
 	 *          	// do something when plugin is loaded
 	 * 			})
-	 * 
+	 *
 	 * @param  {array}
 	 * @param  {function}
 	 */
@@ -1710,7 +1710,7 @@ window.matchMedia || (window.matchMedia = function() {
 
         if( !dependencies ) {
         	// If no dependencies defined then run _callback imidietelly
-        	_callback(); 
+        	_callback();
         	return;
         }
 
@@ -1794,7 +1794,7 @@ window.matchMedia || (window.matchMedia = function() {
     MK.utils.actions.activate = function (el) {
         $(el).addClass('is-active');
     };
-        
+
     MK.utils.actions.deactivate = function (el) {
         $(el).removeClass('is-active');
     };
@@ -1832,7 +1832,7 @@ window.matchMedia || (window.matchMedia = function() {
                 }
             }
         };
-        
+
         var searchVersion = function (dataString) {
             var index = dataString.indexOf(versionSearchString);
             if (index === -1) {
@@ -1858,7 +1858,7 @@ window.matchMedia || (window.matchMedia = function() {
         	name : name,
         	version : version
         };
-        
+
 	})();
 
     /**
@@ -1871,7 +1871,7 @@ window.matchMedia || (window.matchMedia = function() {
 		if (navigator.appVersion.indexOf("X11")!=-1) return "UNIX";
 		if (navigator.appVersion.indexOf("Linux")!=-1) return "Linux";
 	})();
-	
+
     /**
      * Check if mobile device.
      * @return {Boolean}
@@ -1879,13 +1879,13 @@ window.matchMedia || (window.matchMedia = function() {
 	MK.utils.isMobile = function() {
         // Problems with bigger tablets as users raport differences with behaviour. Switch to navigator sniffing
 		// return ('ontouchstart' in document.documentElement) && matchMedia( '(max-width: 1024px)' ).matches;
-     
+
         // http://www.abeautifulsite.net/detecting-mobile-devices-with-javascript/
         // if it still brings problem try to move to more sophisticated solution like
         // apachemobilefilter.org
         // detectright.com
         // web.wurfl.io
-        // 
+        //
         // Seems as best solution here:
         // hgoebl.github.io/mobile-detect.js
 
@@ -1909,13 +1909,13 @@ window.matchMedia || (window.matchMedia = function() {
             return navigator.userAgent.match(/IEMobile/i);
         }
 
-        return (android() || blackBerry() || iOS() || opera() || windows() || matchMedia( '(max-width: 1024px)' ).matches); 
-            
+        return (android() || blackBerry() || iOS() || opera() || windows() || matchMedia( '(max-width: 1024px)' ).matches);
+
 	};
 
     /**
      * Check if menu is switched to responsive state based on user width settings
-     * @return {Boolean} 
+     * @return {Boolean}
      */
     MK.utils.isResponsiveMenuState = function() {
         return window.matchMedia( '(max-width: '+ mk_responsive_nav_width +'px)').matches;
@@ -1982,7 +1982,7 @@ window.matchMedia || (window.matchMedia = function() {
 	/**
 	 * Publish custom event to notify appliaction about state change
 	 * @param  {String}
-	 * 
+	 *
 	 * @usage MK.utils.eventManager.publish('event', {
 	 *        	param: val
 	 *        })
@@ -2039,7 +2039,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 	/**
 	 * Get all top offsets from jQuery collection
-	 * 
+	 *
 	 * @param  {$Objects}
 	 * @return {Aray}
 	 */
@@ -2051,7 +2051,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 	/**
 	 * Retrive from array of numbers first number that is higher than given parameter
-	 * 
+	 *
 	 * @param  {Number}
 	 * @param  {Array}
 	 * @return {Number}
@@ -2084,8 +2084,8 @@ window.matchMedia || (window.matchMedia = function() {
             var now = +new Date;
             if( last && now < last + delay ) {
             	clearTimeout( deferTimer );
-            	deferTimer = setTimeout( function() { 
-            		last = now; fn.apply( context, args ); 
+            	deferTimer = setTimeout( function() {
+            		last = now; fn.apply( context, args );
             	}, delay );
           	} else {
             	last = now;
@@ -2094,7 +2094,7 @@ window.matchMedia || (window.matchMedia = function() {
         };
     };
 
-})(jQuery); 
+})(jQuery);
 (function($) {
 	'use strict';
 
@@ -2144,7 +2144,7 @@ window.matchMedia || (window.matchMedia = function() {
         function preventDefault(e) {
           e = e || window.event;
           e.preventDefault();
-          e.returnValue = false;  
+          e.returnValue = false;
         }
 
         function wheel(e) {
@@ -2168,12 +2168,12 @@ window.matchMedia || (window.matchMedia = function() {
           	document.onkeydown = keydown;
         }
 
-        function enableScroll() {            
+        function enableScroll() {
           	if (window.removeEventListener) {
                 window.removeEventListener('DOMMouseScroll', wheel, false);
             }
-            window.onmousewheel = document.onmousewheel = document.onkeydown = null; 
-        }	
+            window.onmousewheel = document.onmousewheel = document.onkeydown = null;
+        }
 
         return {
         	disable : disableScroll,
@@ -2193,7 +2193,7 @@ window.matchMedia || (window.matchMedia = function() {
 			currentPage = loc.origin + loc.pathname,
 			href = $this.attr( 'href' ),
 			linkSplit = (href) ? href.split( '#' ) : '',
-			hrefPage  = linkSplit[0] ? linkSplit[0] : '', 
+			hrefPage  = linkSplit[0] ? linkSplit[0] : '',
 			hrefHash  = linkSplit[1] ? linkSplit[1] : '';
 
 		if( typeof hrefHash !== 'undefined' && hrefHash !== '' ) {
@@ -2204,7 +2204,7 @@ window.matchMedia || (window.matchMedia = function() {
 	};
 
 	/**
-	 * This should be invoked only on page load. 
+	 * This should be invoked only on page load.
 	 * Scrolls to anchor from  address bar
 	 */
 	MK.utils.scrollToURLHash = function() {
@@ -2215,11 +2215,11 @@ window.matchMedia || (window.matchMedia = function() {
 			// !loading is added early after DOM is ready to prevent native jump to anchor
 			hash = hash.replace( '!loading', '' );
 
-			// Wait for one second before animating 
+			// Wait for one second before animating
 			// Most of UI animations should be done by then and async operations complited
 			setTimeout( function() {
 				MK.utils.scrollToAnchor( hash );
-			}, 1000 ); 
+			}, 1000 );
 
 			// Right after reset back address bar
 			setTimeout( function() {
@@ -2243,7 +2243,7 @@ window.matchMedia || (window.matchMedia = function() {
 	        _p 		  = 'before'; // current position
 
 		var checkPosition = function() {
-	    	var s = MK.val.scroll(), 
+	    	var s = MK.val.scroll(),
 	    		o = offset(),
 	    		h = height();
 
@@ -2251,7 +2251,7 @@ window.matchMedia || (window.matchMedia = function() {
 	        	// console.log( toSpy, 'before' );
 	        	if( config.before ) config.before();
 	        	_p = 'before';
-	        } 
+	        }
 	        else if( s >= o && s <= o + h && _p !== 'active' ) {
 	        	// console.log( toSpy, 'active' );
 	        	if( config.active ) config.active( o );
@@ -2269,13 +2269,13 @@ window.matchMedia || (window.matchMedia = function() {
 		};
 
 		var exportVals = function() {
-			return cacheVals;    
+			return cacheVals;
 		};
 
 		var updateCache = function() {
 	    	var o = offset(),
 	    		h = height();
-	    		
+
 	        cacheVals = {
 	        	before : o - $window.height(),
 	        	active : o,
@@ -2293,7 +2293,7 @@ window.matchMedia || (window.matchMedia = function() {
 	    $window.on( 'mouseup', checkPosition );
    		window.addResizeListener( container, checkPosition );
 
-	    $window.on( 'scroll', rAF ); 
+	    $window.on( 'scroll', rAF );
 
    		updateCache();
 	    $window.on( 'load', updateCache );
@@ -2343,7 +2343,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 //             var videoAspectRatio;
 
-//             resizeBackground(); 
+//             resizeBackground();
 
 //             video.onloadedmetadata = function() {
 //                 // get images aspect ratio
@@ -2380,9 +2380,9 @@ window.matchMedia || (window.matchMedia = function() {
 //     };
 
 // }());
-// 
-// 
-// 
+//
+//
+//
 // TODO it is temp only. make it as a plugin
 
 (function($) {
@@ -2400,9 +2400,9 @@ window.matchMedia || (window.matchMedia = function() {
         wrapperHeight = $wrapper.height();
         wrapperWidth = $wrapper.width();
         wrapperAspectRatio = (wrapperHeight / wrapperWidth) * 100;
-    } 
+    }
 
-    function apply() {        
+    function apply() {
         var width = (wrapperAspectRatio / baseAspectRatio) * 100,
             widthOverflow = (width - 100);
 
@@ -2410,7 +2410,7 @@ window.matchMedia || (window.matchMedia = function() {
             'padding-top': wrapperAspectRatio + '%',
             'width': width + '%',
             'left': -(widthOverflow / 2) + '%'
-        }); 
+        });
     }
 
     function reset() {
@@ -2439,7 +2439,7 @@ window.matchMedia || (window.matchMedia = function() {
 
     /**
      * 	MK.val is collection of Lambdas responsible for returning up to date values of method type like scrollY or el offset.
-     * 	The Lambda is responsible for keeping track of value of a particular property, usually takes as argument an object 
+     * 	The Lambda is responsible for keeping track of value of a particular property, usually takes as argument an object
      * 	(or DOM reference) and internally creates and updates data that is returned as primitive value - through variable reference.
      *
      *  Benefits of this approach:
@@ -2448,7 +2448,7 @@ window.matchMedia || (window.matchMedia = function() {
      *  - updating values when needed to be updated not read
      *
      *  Downsides:
-     *  - Memory overhead with closures and keeping state in memory ( still beter than read state from DOM, but use wisely - 
+     *  - Memory overhead with closures and keeping state in memory ( still beter than read state from DOM, but use wisely -
      *    do not use it when you really need static value on runtime )
      */
     MK.val = {};
@@ -2541,7 +2541,7 @@ window.matchMedia || (window.matchMedia = function() {
         var setOffset = function() {
 
         	//we calculate toolbar height for When the device is changed Size
-        	//Toolbar height in responsive state is 0 
+        	//Toolbar height in responsive state is 0
             toolbarHeight = (hasToolbar) ? $toolbar.height() : 0;
 
             if (MK.utils.isResponsiveMenuState()) {
@@ -2623,8 +2623,8 @@ window.matchMedia || (window.matchMedia = function() {
                     toolbarHeight = 0;
                 }
 
-                //in responsive state , .mk-header-holder position's changed to "relative" 
-                //and header's border affected to offset,so borders must be calculated 
+                //in responsive state , .mk-header-holder position's changed to "relative"
+                //and header's border affected to offset,so borders must be calculated
                 var headerBorder = 0;
                 headerBorder = parseInt($innerHeader.css('border-bottom-width'));
 
@@ -2669,9 +2669,9 @@ window.matchMedia || (window.matchMedia = function() {
 
 
     /**
-     * Gets current offset of given element (passed as object or DOM reference) from top or bottom (default to top) 
+     * Gets current offset of given element (passed as object or DOM reference) from top or bottom (default to top)
      * of screen  with possible threshold (default to 0)
-     * 
+     *
      * @uses   MK.val.dynamicOffset({obj reference}, {'top'|'bottom'}, {threshold val})
      * @param  {string|object}
      * @param  {string}
@@ -2711,7 +2711,7 @@ window.matchMedia || (window.matchMedia = function() {
 
     /**
      * Gets current height of given element (passed as object or DOM reference)
-     * 
+     *
      * @uses   MK.val.dynamicHeight({obj reference})
      * @param  {string|object}
      * @return {number}
@@ -3993,7 +3993,7 @@ jQuery.extend(jQuery.easing, {
       var that = this;
 
       $(this).each(function(index, menu) {
-        that.node = menu.element; 
+        that.node = menu.element;
         that.addListeners(menu.element);
 
         var $menu = $(menu.element);
@@ -4172,10 +4172,10 @@ jQuery.extend(jQuery.easing, {
 
 ;(function(window, document, undefined){
   var classes = [];
-  
+
 
   var tests = [];
-  
+
 
   /**
    *
@@ -4224,7 +4224,7 @@ jQuery.extend(jQuery.easing, {
     }
   };
 
-  
+
 
   // Fake some of Object.create so we can force non test results to be non "own" properties.
   var Modernizr = function() {};
@@ -4234,7 +4234,7 @@ jQuery.extend(jQuery.easing, {
   // Overwrite name so constructor name is nicer :D
   Modernizr = new Modernizr();
 
-  
+
 
   /**
    * List of property values to set for css tests. See ticket #21
@@ -4275,7 +4275,7 @@ jQuery.extend(jQuery.easing, {
   // expose these for the plugin API. Look in the source for how to join() them against your input
   ModernizrProto._prefixes = prefixes;
 
-  
+
 
   /**
    * is returns a boolean if the typeof an obj is exactly type.
@@ -4371,7 +4371,7 @@ jQuery.extend(jQuery.easing, {
    */
 
   var docElement = document.documentElement;
-  
+
 
   /**
    * A convenience helper to check if the document we are running in is an SVG document
@@ -4381,7 +4381,7 @@ jQuery.extend(jQuery.easing, {
    */
 
   var isSVG = docElement.nodeName.toLowerCase() === 'svg';
-  
+
 
   /**
    * setClasses takes an array of class names and adds them to the root element
@@ -4772,7 +4772,7 @@ jQuery.extend(jQuery.easing, {
    */
 
   var omPrefixes = 'Moz O ms Webkit';
-  
+
 
   /**
    * List of JavaScript DOM values used for tests
@@ -4794,7 +4794,7 @@ jQuery.extend(jQuery.easing, {
 
   var domPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.toLowerCase().split(' ') : []);
   ModernizrProto._domPrefixes = domPrefixes;
-  
+
 
   /**
    * cssToDOM takes a kebab-case string and converts it to camelCase
@@ -4815,7 +4815,7 @@ jQuery.extend(jQuery.easing, {
 
   var cssomPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.split(' ') : []);
   ModernizrProto._cssomPrefixes = cssomPrefixes;
-  
+
 
   /**
    * atRule returns a given CSS property at-rule (eg @keyframes), possibly in
@@ -4882,7 +4882,7 @@ jQuery.extend(jQuery.easing, {
 
   ModernizrProto.atRule = atRule;
 
-  
+
 
 
   /**
@@ -5083,7 +5083,7 @@ jQuery.extend(jQuery.easing, {
    */
 
   var testStyles = ModernizrProto.testStyles = injectElementWithStyles;
-  
+
 
   /**
    * fnBind is a super small [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) polyfill.
@@ -5156,7 +5156,7 @@ jQuery.extend(jQuery.easing, {
     delete modElem.elem;
   });
 
-  
+
 
   var mStyle = {
     style: modElem.elem.style
@@ -5168,7 +5168,7 @@ jQuery.extend(jQuery.easing, {
     delete mStyle.style;
   });
 
-  
+
 
   /**
    * domToCSS takes a camelCase string and converts it to kebab-case
@@ -5359,7 +5359,7 @@ jQuery.extend(jQuery.easing, {
   var testProp = ModernizrProto.testProp = function(prop, value, useValue) {
     return testProps([prop], undefined, value, useValue);
   };
-  
+
 
   /**
    * testPropsAll tests a list of DOM properties we want to check against.
@@ -5398,7 +5398,7 @@ jQuery.extend(jQuery.easing, {
   // Modernizr.testAllProps('boxSizing')
   ModernizrProto.testAllProps = testPropsAll;
 
-  
+
 
   /**
    * prefixed returns the prefixed or nonprefixed property name variant of your input
@@ -5482,7 +5482,7 @@ jQuery.extend(jQuery.easing, {
     }
   };
 
-  
+
 
   /**
    * testAllProps determines whether a given CSS property is supported in the browser
@@ -5525,7 +5525,7 @@ jQuery.extend(jQuery.easing, {
     return testPropsAll(prop, undefined, undefined, value, skipValueTest);
   }
   ModernizrProto.testAllProps = testAllProps;
-  
+
 /*!
 {
   "name": "CSS Animations",
@@ -5700,7 +5700,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
 		_initEvents: function() {
 
 			var self = this;
-			
+
 			$('.mk-vm-menuwrapper a').on('transitionend', function(event) {
 				event.stopPropagation();
 			});
@@ -5890,18 +5890,18 @@ This test will also return `true` for Firefox 4 Multitouch support.
 ( function($) {
     'use strict';
 
-	/* 
+	/*
 	 * Define popup / hover states manually to prevent click for IE on touchdevices
 	 */
 
-	$('.mk-main-navigation .menu-item-has-children').children('a').attr('aria-haspopup', 'true'); 
+	$('.mk-main-navigation .menu-item-has-children').children('a').attr('aria-haspopup', 'true');
 	$('.animated-column-item').attr('aria-haspopup', 'true');
 
 })( jQuery );
 (function($) {
     'use strict';
 
-    var Accordion = function(el) { 
+    var Accordion = function(el) {
         // Private
         var that = this,
             $el = $(el),
@@ -5913,7 +5913,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
         this.$single = $('.' + this.dom.single, $el);
         this.isExpendable = ($el.data('style') === 'toggle-action');
 
-        // Init 
+        // Init
         this.bindClicks();
         // Reveal initial tab on load event (wait for possible images inside)
         $(window).on('load', function() {
@@ -5922,7 +5922,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
         $(window).on('resize', function() {
             clearTimeout(timeout);
             timeout = setTimeout(that.bindClicks.bind(that), 500);
-        }); 
+        });
     }
 
     Accordion.prototype.dom = {
@@ -5939,11 +5939,11 @@ This test will also return `true` for Firefox 4 Multitouch support.
         // Prevent multiple events binding
         this.$single.off('click', '.' + this.dom.tab);
 
-        if( !(window.matchMedia('(max-width: ' + this.dom.mobileBreakPoint +'px)').matches 
+        if( !(window.matchMedia('(max-width: ' + this.dom.mobileBreakPoint +'px)').matches
           && this.$el.hasClass(this.dom.mobileToggle)) ) {
 
             this.$single.on('click', '.' + this.dom.tab, this.handleEvent.bind(this));
-            // When website is loaded in mobile view and resized to desktop 'current' will 
+            // When website is loaded in mobile view and resized to desktop 'current' will
             // inherit display: none from css. Repair it by calling show() on this element
             var $current = $('.' + this.dom.current, this.$el);
             if($('.' + this.dom.pane, $current).css('display') === 'none') this.show($current);
@@ -6031,17 +6031,17 @@ This test will also return `true` for Firefox 4 Multitouch support.
 			this.diagram.setViewBox(0,0,this.config.dimension,this.config.dimension,true);
 			this.diagram.setSize('90%', '90%');
 
-			this.diagram.circle( this.config.radius, this.config.radius, 80 ).attr({ 
-				stroke: 'none', 
-				fill: this.config.circleColor 
+			this.diagram.circle( this.config.radius, this.config.radius, 80 ).attr({
+				stroke: 'none',
+				fill: this.config.circleColor
 			});
-        
+
         	// Export title
 	        this.title = this.diagram.text( this.config.radius, this.config.radius, this.config.defaultText ).attr({
 	            font: "22px helvetica",
 	            fill: this.config.defaultTextColor
 	        }).toFront();
-	        
+
 	        this.diagram.customAttributes.arc = function(value, color, rad){
 	            var v = 3.6 * value,
 	                alpha = v == 360 ? 359.99 : v,
@@ -6054,9 +6054,9 @@ This test will also return `true` for Firefox 4 Multitouch support.
 	                y  = self.config.radius - rad * Math.sin(a),
 	                path = [['M', sx, sy], ['A', rad, rad, 0, +(alpha > 180), 1, x, y]];
 
-	            return { 
-	            	path: path, 
-	            	stroke: color 
+	            return {
+	            	path: path,
+	            	stroke: color
 	            }
 	        }
 		},
@@ -6077,7 +6077,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
 			$path.mouseover( function() {
 				self.showSkill( this, config.name, config.percent );
 			}).mouseout( function() {
-				self.hideSkill( this ) 
+				self.hideSkill( this )
 			});
 		},
 
@@ -6088,9 +6088,9 @@ This test will also return `true` for Firefox 4 Multitouch support.
             //solves IE problem
             if(Raphael.type != 'VML') $this.toFront();
 
-            $this.animate({ 
-            	'stroke-width': 50, 
-            	'opacity': 0.9, 
+            $this.animate({
+            	'stroke-width': 50,
+            	'opacity': 0.9,
             }, 800, 'elastic' );
 
             this.title.stop()
@@ -6104,16 +6104,16 @@ This test will also return `true` for Firefox 4 Multitouch support.
 				self = this,
 				time = 250;
 
-            $this.stop().animate({ 
-            	'stroke-width': 28, 
-            	opacity: 1 
+            $this.stop().animate({
+            	'stroke-width': 28,
+            	opacity: 1
             }, time * 4, 'elastic' );
 
             self.title.stop()
             	.animate({ opacity: 0 }, time, '>', function(){
 	                self.title.attr({ text: self.config.defaultText })
 	                .animate({ opacity: 1 }, time, '<');
-            	}); 
+            	});
 		}
 	}
 
@@ -6126,9 +6126,9 @@ This test will also return `true` for Firefox 4 Multitouch support.
 
 })(jQuery);
 /*
- * Tab delegation 
+ * Tab delegation
  * Action for modules when we don't have access to chidren DOM on processing templates
- * yet we want ass option of opening link in new tab. 
+ * yet we want ass option of opening link in new tab.
  * Helpful for use with external widgets like flickr
  */
 
@@ -6147,7 +6147,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
 	}
 
 	function openInTab( e ) {
-		e.preventDefault(); 
+		e.preventDefault();
 
 		var $this = $( this ),
 			url = $this.attr( 'href' );
@@ -6215,7 +6215,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
 // We'll refactor all of this.
 window.ajaxInit = function() {
     mk_lightbox_init();
-    mk_click_events(); 
+    mk_click_events();
     mk_social_share_global();
    // mk_social_share();
     mk_gallery();
@@ -6224,7 +6224,7 @@ window.ajaxInit = function() {
 
 window.ajaxDelayedInit = function() {
     mk_flexslider_init();
-    // mk_portfolio_ajax(); 
+    // mk_portfolio_ajax();
 };
 
 $(document).ready(function() {
@@ -6261,9 +6261,9 @@ $(document).ready(function() {
         mk_page_section_social_video_bg();
         loop_audio_init();
         mk_one_page_scroller();
-                        
+
         setTimeout(function() {
-            /* 
+            /*
                 Somehow the values are not correctly updated for the screens
                 and we need to put setTimeout to fix the issue
             */
@@ -6273,7 +6273,7 @@ $(document).ready(function() {
         console.log("ready for rock");
     });
 
- 
+
     var onDebouncedResize = function() {
         mk_theatre_responsive_calculator();
         mk_mobile_tablet_responsive_calculator();
@@ -6380,7 +6380,7 @@ function mk_tab_slider_func() {
                 setTimeout(function() {
                     mk_tab_slider.reInit();
                     $content.css('display','table');
-                },100);  
+                },100);
             }
 
             $('.mk-tab-slider-nav[data-id="' + id + '"]').find("a").first().addClass('active');
@@ -6479,7 +6479,7 @@ function mk_one_page_scroller() {
                         MK.utils.eventManager.publish( 'firstElSkinChange', currentSkin );
                         $('#fullPage-nav').removeClass('light-skin dark-skin').addClass(currentSkin + '-skin');
 
-                    }, 
+                    },
                     afterRender: function() {
 
                         var $nav = $('#fullPage-nav');
@@ -6549,7 +6549,7 @@ function mk_one_page_scroller() {
         });
     });
 
-    
+
 
 }
 
@@ -6818,7 +6818,7 @@ function mk_page_section_social_video_bg() {
             setTimeout(function() {
                 player.playVideo();
                 if($sound == false) {
-                    player.mute();    
+                    player.mute();
                 }
             }, 1000);
         }
@@ -7181,7 +7181,7 @@ function loop_audio_init() {
           },
           play: function () { // To avoid both jPlayers playing together.
             $this.jPlayer("pauseOthers");
-          }, 
+          },
           swfPath: mk_theme_js_path,
           supplied: "mp3, ogg",
           cssSelectorAncestor: css_selector_ancestor,
@@ -7599,7 +7599,7 @@ var progressButton = {
 function mk_click_events() {
   "use strict";
 
-  var eventtype = 'click'; 
+  var eventtype = 'click';
 
   $(".mk-header-login, .mk-header-signup, .mk-side-dashboard, .mk-quick-contact-wrapper, .mk-dashboard-trigger, .blog-share-container, .news-share-buttons, .main-nav-side-search, #mk-fullscreen-search-wrapper, #fullscreen-navigation").on(eventtype, function(event) {
     if (event.stopPropagation) {
@@ -7713,7 +7713,7 @@ function mk_event_countdown() {
           offset: $offset
         });
       });
-      
+
     });
   }
 }
@@ -7859,20 +7859,20 @@ function mk_hover_events() {
     if ($this.hasClass('page_item_has_children') || $this.hasClass('menu-item-has-children') || $this.hasClass('cat-parent')) {
       $this.on('click', function() {
         if($this.hasClass('toggle-active')) {
-            $subLevel.stop(true, true).slideUp(700);  
+            $subLevel.stop(true, true).slideUp(700);
             $this.removeClass('toggle-active');
         } else {
             $subLevel.stop(true, true).slideDown(700);
             $this.addClass('toggle-active');
         }
-      }); 
+      });
     }
 
-  });  
+  });
 
   // var eventtype = mobilecheck() ? 'touchstart' : 'click';
   var eventtype = 'click';
-  
+
   $('.mk-fullscreen-trigger').on(eventtype, function(e) {
     $('.mk-fullscreen-search-overlay').addClass('mk-fullscreen-search-overlay-show');
     setTimeout(function(){
@@ -7910,7 +7910,7 @@ var $lightbox = $(".mk-lightbox");
 
   $lightbox.fancybox({
             padding: 15,
-            margin: 15, 
+            margin: 15,
 
             width: 800,
             height: 600,
@@ -7972,7 +7972,7 @@ var $lightbox = $(".mk-lightbox");
             helpers : {
                 media : {},
                 overlay: {
-                  locked: true 
+                  locked: true
                 }
             },
 
@@ -8290,7 +8290,7 @@ if(typeof exports !== 'undefined') {
         $backBtn.removeClass('is-active');
     }
 
-    function activate() { 
+    function activate() {
         $contactBtn.addClass('is-active');
         $backBtn.addClass('is-active');
     }
@@ -8309,7 +8309,7 @@ if(typeof exports !== 'undefined') {
     	// Close nav with removing classes
 	    $('.mk-fullscreen-nav').removeClass('opened');
 	    $('.mk-dashboard-trigger').removeClass('fullscreen-active');
-	    $('body').removeClass('fullscreen-nav-opened'); 
+	    $('body').removeClass('fullscreen-nav-opened');
 
 		var anchor = MK.utils.detectAnchor( this ),
 	        $this = $( this );
@@ -8350,9 +8350,9 @@ if(typeof exports !== 'undefined') {
 	'use strict';
 
 	/**
-     * One pager menu hash update. 
+     * One pager menu hash update.
      * Smooth scroll is appended globally whenever the click element has corresponding #el
-     */    
+     */
     var onePageNavItem = function onePageNavItem() {
         var $this = $( this ),
             link = $this.find( 'a' ),
@@ -8377,7 +8377,7 @@ if(typeof exports !== 'undefined') {
     };
 
     var $navItems = $('.js-main-nav').find( 'li' );
-    
+
     $(window).on('load', function() {
         // Wait with spying anchors so we do not assign anchor that is browser scroll to after page load
         // Especially when there are anchors on top - refreshing page can cause grabbing one of them into url
@@ -8386,7 +8386,7 @@ if(typeof exports !== 'undefined') {
             $navItems.each( onePageNavItem );
         }, 1000);
     });
-	
+
 }(jQuery));
 (function($) {
     'use strict';
@@ -8406,7 +8406,7 @@ if(typeof exports !== 'undefined') {
     var screenHeight = screen.height;
 
     // We keep this handler above hasResMenu flag.
-    // Even if our header doesn't contain droppable responsive menu (in favor of fullscreen or side menu) 
+    // Even if our header doesn't contain droppable responsive menu (in favor of fullscreen or side menu)
     // we still transform tollbar into collapsible menu part in responsive state
     $('.mk-toolbar-resposnive-icon').on('click', function(e) {
         e.preventDefault();
@@ -8450,7 +8450,7 @@ if(typeof exports !== 'undefined') {
         if(searchBox.hasClass('input-focused')){
             searchBox.removeClass('input-focused');
         }
-        
+
     }
 
     $resMenuLink.each(function() {
@@ -8466,12 +8466,12 @@ if(typeof exports !== 'undefined') {
     setResMenuHeight();
     $window.on('resize', setResMenuHeight);
 
-    // check if device virtual keyboard is active 
+    // check if device virtual keyboard is active
     var isVirtualKeyboard = function() {
         var currentWindowHeight = $window.height();
         var currentScreenHeight = screen.height;
         var searchBox = $('.responsive-searchform .text-input');
-        var searchBoxIsFocused = false; 
+        var searchBoxIsFocused = false;
 
         //for iPhone 5 focus bug , add class for detect focus state
         searchBox.on('touchstart touchend', function(e) {
@@ -8511,11 +8511,11 @@ if(typeof exports !== 'undefined') {
 (function($) {
 	'use strict';
 
-    var $header = $('.mk-header');    
+    var $header = $('.mk-header');
     var hasHeader = ($header.length > 0);
 
     if(!hasHeader) return;
-    
+
     var $sticky_style = $header.attr('data-header-style');
 
     //if ($sticky_style !== 3) return;
@@ -8529,14 +8529,14 @@ if(typeof exports !== 'undefined') {
     $('.mk-nav-arrow').stop(true).on('click', function(e) {
         e.preventDefault();
         var $this = $(this);
-        
+
         if ($this.hasClass('mk-nav-sub-closed')) {
             $this.siblings('ul').slideDown(450).end().removeClass('mk-nav-sub-closed').addClass('mk-nav-sub-opened');
         } else {
             $this.siblings('ul').slideUp(450).end().removeClass('mk-nav-sub-opened').addClass('mk-nav-sub-closed');
         }
     });
-   
+
     $('.mk-dashboard-trigger').on('click', function(e) {
         var $this = $(this),
             $body = $('body'),
@@ -8547,7 +8547,7 @@ if(typeof exports !== 'undefined') {
             $this.addClass('dashboard-active');
             $body.addClass('dashboard-opened');
           } else {
-            $this.removeClass('dashboard-active'); 
+            $this.removeClass('dashboard-active');
             $body.removeClass('dashboard-opened');
           }
         }else if($this.hasClass('fullscreen-style')){
@@ -8570,7 +8570,7 @@ if(typeof exports !== 'undefined') {
         $('body').removeClass('dashboard-opened');
         $('.mk-dashboard-trigger').removeClass('dashboard-active');
     });
-	
+
 }(jQuery));
 (function($) {
 	'use strict';
@@ -8588,7 +8588,7 @@ if(typeof exports !== 'undefined') {
 
     verticalMenu();
     $(window).on('resize', verticalMenu);
-	
+
 }(jQuery));
 (function($) {
     'use strict';
@@ -8620,18 +8620,18 @@ if(typeof exports !== 'undefined') {
     var isStickyLazy = (config.stickyStyle === 'lazy');
     var isStickyFixed = (config.stickyStyle === 'fixed');
     var isStickySlide = (config.stickyStyle === 'slide');
-    
+
     function isSticky() { // Check for sticky compatibility
-        //return config.headerStyle !== 4; header style 4 needs sticky state for transparent header. 
+        //return config.headerStyle !== 4; header style 4 needs sticky state for transparent header.
         return true;
     }
-    
+
     function isColorable() { // Check for coloring compatibility
         // TODO make it explicit in DOM that header is transparent as this is only scenario for colorable header
         // Monkey patch - exclude header styles that don't fit colorable
         return config.headerStyle !== 4;
     }
-    
+
 
     /**
      * Change header skin
@@ -8673,7 +8673,7 @@ if(typeof exports !== 'undefined') {
             wHeight = $window.height();
         };
 
-        var onScroll = function onScroll() { 
+        var onScroll = function onScroll() {
             wScrollCurrent = MK.val.scroll();
             wScrollDiff = wScrollBefore - wScrollCurrent;
 
@@ -8686,7 +8686,7 @@ if(typeof exports !== 'undefined') {
                 $header.addClass( elClassSticky );
 
             } else if( wScrollDiff < 0 ) { // scrolled down
-                
+
                 if( wScrollCurrent + wHeight >= dHeight && $headerHolder.hasClass( elClassHidden ) ) { // scrolled to the very bottom; element slides in
                     $headerHolder.removeClass( elClassHidden );
                     $header.addClass( elClassSticky );
@@ -8728,7 +8728,7 @@ if(typeof exports !== 'undefined') {
         };
 
         toggleState();
-        $window.on( 'scroll', MK.utils.throttle( 100, toggleState) ); 
+        $window.on( 'scroll', MK.utils.throttle( 100, toggleState) );
         $window.on( 'resize', MK.utils.throttle( 100, toggleState) );
     }
 
@@ -8761,7 +8761,7 @@ if(typeof exports !== 'undefined') {
     }
 
     // TODO
-    // var pageIntro = $('body').data('intro'); // block scrolling on page intro 
+    // var pageIntro = $('body').data('intro'); // block scrolling on page intro
 
 
 })( jQuery );
@@ -8806,9 +8806,9 @@ if(typeof exports !== 'undefined') {
             //$( this ).remove();
          });
 		}
-	};  
+	};
 
-})( jQuery ); 
+})( jQuery );
 (function($) {
 	'use strict';
 
@@ -8828,7 +8828,7 @@ if(typeof exports !== 'undefined') {
 		this.xhrCounter = 0;
 	};
 
-	MK.utils.ajaxLoader.prototype = { 
+	MK.utils.ajaxLoader.prototype = {
 		init: function init() {
 			// prevent double initialization of we return an instance
 			if(this.initialized) return;
@@ -8930,7 +8930,7 @@ if(typeof exports !== 'undefined') {
 
 	/**
 	 *	Take all elements with data-mk-img-set attribute and evaluate best image according to given device orientation and resolution,
-	 *	sets style for backround-image on the same node element.	 * 
+	 *	sets style for backround-image on the same node element.	 *
 	 */
 
 	var $win = $(window),
@@ -8951,15 +8951,15 @@ if(typeof exports !== 'undefined') {
 
 	// Keep our main side effect out of calculations so they can be run once before loop of applying bg as a result
 	function applyBg() {
-		var $this = $(this), 
+		var $this = $(this),
 			imgs = $this.data('mk-img-set');
 
 		$this.css('background-image', 'url('+ getImage(imgs) +')');
 	}
 
-	// Keep track of current screen size while resizing but update device reference 
+	// Keep track of current screen size while resizing but update device reference
 	// and reapply backgrounds only when we discover switch point
-	function handleResize() { 
+	function handleResize() {
 		updateScreenSize();
 		if(hasSwitched()) {
 			updateDevice();
@@ -8970,7 +8970,7 @@ if(typeof exports !== 'undefined') {
 	function getScreenSize() {
 		return {
 			w: $win.width(),
-			h: $win.height() 
+			h: $win.height()
 		};
 	}
 
@@ -8990,15 +8990,15 @@ if(typeof exports !== 'undefined') {
 	function getImage(imgs) {
 		if (imgs['responsive'] === 'false') {
 			return (imgs['landscape']['desktop']) ? imgs['landscape']['desktop'] : (imgs['landscape']['external'] ? imgs['landscape']['external'] : '');
-			
+
 		}
 		var hasOrientation = !!imgs[orientation];
-		// there are only two orientations now and we may get them by string name if both are there 
+		// there are only two orientations now and we may get them by string name if both are there
 		// or by index of 0 if only one is available. Note Objects has no lexical order so we need to grab key name by its index.
-		// Also we may have external file for each orientation which we don't scale internaly so we grab it as it is. If nothing found return an empty string 
+		// Also we may have external file for each orientation which we don't scale internaly so we grab it as it is. If nothing found return an empty string
 		var imgOriented = imgs[ (hasOrientation ? orientation : Object.keys(imgs)[0]) ],
 			imgExact    = (imgOriented[device.class]) ? imgOriented[device.class] : (imgOriented['external'] ? imgOriented['external'] : '');
-		return imgExact; 
+		return imgExact;
 	}
 
 	function updateScreenSize() {
@@ -9007,7 +9007,7 @@ if(typeof exports !== 'undefined') {
 
 	function updateDevice() {
 		if(lastOrientation !== orientation) orientation = lastOrientation;
-		// Switch device only if going from smaller size to bigger. 
+		// Switch device only if going from smaller size to bigger.
 		// Bigger to smaller is perfectly handled by browsers and doesn't require change and reupload
 		if(lastDevice.id > device.id) device = lastDevice;
 	}
@@ -9061,7 +9061,7 @@ if(typeof exports !== 'undefined') {
 			prev : '<a href="javascript:;" class="slick-prev"> <svg  width="33px" height="65px"> <polyline fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points=" 32.5,64.5 0.5,32.5 32.5,0.5"/> </svg> </a>'
 		},
 
-		init : function() { 
+		init : function() {
 			var self = this;
 
 			// core.loadDependencies([ path.plugins + 'slick.js' ], function() {
@@ -9166,7 +9166,7 @@ if(typeof exports !== 'undefined') {
 				$( this ).css({
 					'background-image': 'url('+ img +')'
 				});
-			});	
+			});
 		},
 
 		play : function(e) {
@@ -9203,15 +9203,15 @@ if(typeof exports !== 'undefined') {
 			this.updateSizes( 'screen' );
 			$( this.element ).slick( 'slickGoTo', this.getCurentId(), true );
 
-			// Update state with delay so we avoid triggering exitFullScreen fn from 
+			// Update state with delay so we avoid triggering exitFullScreen fn from
 			// fullscreenchange event
 			setTimeout( function() {
 				self.isFullScreen = true;
-			}, 1000);					
+			}, 1000);
 		},
 
 		exitFullScreen : function() {
-			if( this.isFullScreen ) { 
+			if( this.isFullScreen ) {
 				this.$exitFullScrBtn.addClass( this.dom.hiddenClass );
 				this.$fullScrBtn.removeClass( this.dom.hiddenClass );
 
@@ -9227,7 +9227,7 @@ if(typeof exports !== 'undefined') {
 		onResize : function() {
 			this.getViewportSizes();
 			this.updateSizes( this.isFullScreen ? 'screen' : 'window' );
-			$( this.element ).slick( 'refresh' );  
+			$( this.element ).slick( 'refresh' );
 			$( this.element ).slick( 'slickGoTo', this.getCurentId(), true );
 			this.updateCacheElements();
 			this.createPagination();
@@ -9242,7 +9242,7 @@ if(typeof exports !== 'undefined') {
 				name;
 				var picture = this.$slides.filter( this.dom.active ).children().first().attr( 'src' );
 			switch( network ) {
-				case 'facebook': 
+				case 'facebook':
 					url = 'https://www.facebook.com/sharer/sharer.php?picture=' + picture+'&u=' + url + '#id=' + id;
 					name = 'Facebook Share';
 					break;
@@ -9317,18 +9317,18 @@ if(typeof exports !== 'undefined') {
 
 /**
  * ICON FACTORY @ Maki
- * 
+ *
  * Javascript part that translates css styles into link to server side manufacturer.
  * By passing extra args we generate icons as needed on server and send them back with ajax and attch them to DOM here.
  *
  * This is temporary solution that helps us switching from font icons to singular svgs without too match overhead. The finalized solution shoulnd be 99% server side.
- * Our main templating is happening there. We should have an icon_factory(name, properties) function that we can call directly in templates to serve us icons. 
- * Post load, js soluition should target only elements that we have no direct access to. We set it as TODO for future as part of progressive development. 
+ * Our main templating is happening there. We should have an icon_factory(name, properties) function that we can call directly in templates to serve us icons.
+ * Post load, js soluition should target only elements that we have no direct access to. We set it as TODO for future as part of progressive development.
  * When correct factory is done we should be able to use it here and there to progressively kill overhead generated by current solution until we could totally switch it.
- * 
+ *
  * Prons:
  * - automated process where we can mimic old behaviour
- * - possible bugs are easy to patch 
+ * - possible bugs are easy to patch
  * - far samller download size for assets needed by theme (no font families css and fonts itself to download, which are currently blocking page load time)
  * - icon generation moved to server side where our main templating is already happening
  * - we can easily switch how our Icon should be outputed - inline, img, object, iframe. Whatever our situation requires (img for responsive icons for example)
@@ -9350,7 +9350,7 @@ if(typeof exports !== 'undefined') {
 		['awesome-icons' , 'mk-icon'], // [family, prefix]
 		['icomoon' 		 , 'mk-moon'],
 		['pe-line-icons' , 'mk-li'],
-		['theme-icons' 	 , 'mk-jupiter-icon'] 
+		['theme-icons' 	 , 'mk-jupiter-icon']
 	];
 
 	// Our css contains this extends for particular families of fonts. For now we automate the process and extend it here as well
@@ -9383,7 +9383,7 @@ if(typeof exports !== 'undefined') {
 			'.blog-blockquote-content',
 			'.ls-nav-prev',
 			'.ls-nav-next'
-		], 
+		],
 
 		'icomoon' : [
 			'.mk-woocommerce-pagination .next',
@@ -9395,8 +9395,8 @@ if(typeof exports !== 'undefined') {
 
 		'pe-line-icons' : [],
 		'theme-icons' : []
-	};	
- 	
+	};
+
  	// Cache holder for quick access to repeating icons. config / svg
 	var _cache = {};
 	var _cacheId = 0;
@@ -9421,13 +9421,13 @@ if(typeof exports !== 'undefined') {
 				// dataType: 'xml',
 				method: 'POST',
 				data: {action : 'mk_get_icon', iterator: iterator++, config: config},
-				success: function(sprite) { 
+				success: function(sprite) {
 					callback(sprite, $icons);
 					_config = [];
 					_iconMap = {};
 					$icons = null;
 				},
-				error: function(err) { 
+				error: function(err) {
 					console.log('Icon load problem');
 				}
 			});
@@ -9442,13 +9442,13 @@ if(typeof exports !== 'undefined') {
  	}());
 
  	// Wait for DOM manipulations and run where really needed
- 	$(window).on('load', function() { 
+ 	$(window).on('load', function() {
  		setTimeout(function() {
  			createAll(document);
  			if($('.mk-header').length) createAll('.mk-header');
  			if($('.js-flexslider, .mk-flexslider').length) createAll('.js-flexslider, .mk-flexslider');
- 			if($('.mk-accordion').length) createAll('.mk-accordion'); 
- 		}, 1000); 
+ 			if($('.mk-accordion').length) createAll('.mk-accordion');
+ 		}, 1000);
  	});
 
  	MK.utils.eventManager.subscribe('ajaxLoaded', function() {
@@ -9490,7 +9490,7 @@ if(typeof exports !== 'undefined') {
  		var $icons = $scope.find('[class*='+ prefix +']');
  		var extraClassNames = extend[family];
  		// if nothing to extend just return what we have till now
- 		if(!extraClassNames) return $icons; 
+ 		if(!extraClassNames) return $icons;
  		// Extend it with our css garbish
  		extraClassNames.forEach(function(className) {
  			var $icon = $scope.find(className);
@@ -9525,7 +9525,7 @@ if(typeof exports !== 'undefined') {
 
 		} else if(_cache[cache]) {
 			// Use cached icon when possible
-			// 
+			//
 			if(typeof _iconMap[cache] === 'undefined') _iconMap[cache] = [$icons.eq(id)];
 			else _iconMap[cache].push($icons.eq(id));
 
@@ -9558,7 +9558,7 @@ if(typeof exports !== 'undefined') {
  		});
 
  		// console.log('sprite',sprite)
- 		// 
+ 		//
 
  		Object.keys(_iconMap).forEach(function (cacheKey) {
 		   	_iconMap[cacheKey].forEach(function($icons) {
@@ -9566,15 +9566,15 @@ if(typeof exports !== 'undefined') {
 		   			var $svg = $(_cache[cacheKey]).clone();
 		   			var $icon = $(this);
 
-		   			// console.log($icon[0], _cache[cacheKey]);  
-		   			
+		   			// console.log($icon[0], _cache[cacheKey]);
+
 		   			function remove() {
 		   				// exclude problematic stuff
 		   				if($icon.parents('.pricing-features')) return;
-			   			$icon.not('.mk-jupiter-icon-xing') 
+			   			$icon.not('.mk-jupiter-icon-xing')
 			   				 .not('.mk-jupiter-icon-square-xing')
 			   				 .not('.mk-jupiter-icon-simple-xing')
-			   				 .find('.mk-svg-icon') 
+			   				 .find('.mk-svg-icon')
 			   				 .not('[data-name="mk-moon-zoom-in"]')
 			   				 .remove(); // and remove else to reapply styles with new loaded svg
 		   			}
@@ -9599,10 +9599,10 @@ if(typeof exports !== 'undefined') {
  		var hasDirection = extractGradient('direction', css.background);
 
  		var config = {
- 			family: family, 
- 			// this is mostly for Extends. Because we've been customizing singular elements and assigning content unicode manually, 
+ 			family: family,
+ 			// this is mostly for Extends. Because we've been customizing singular elements and assigning content unicode manually,
  			// now we don't have any proper anchor for usage with our json map
- 			unicode: (unicode) ? unicode : decodeUnicode(css.content), 
+ 			unicode: (unicode) ? unicode : decodeUnicode(css.content),
  			name: name,
  			// fill: css.color,
  			gradient_type:  hasGradient ? extractGradient('type' , css.background) : false,
@@ -9628,7 +9628,7 @@ if(typeof exports !== 'undefined') {
  		// console.log('Possibility of missing icons for element with classes:' + missing);
  	}
 
- 	// Check if background conatains gradient declaration and return bg string if so or false 
+ 	// Check if background conatains gradient declaration and return bg string if so or false
  	function checkGradient(css) {
  		var bg = css.background;
  		if(bg.indexOf('radial') !== -1 || bg.indexOf('linear') !== -1) return bg;
@@ -9667,7 +9667,7 @@ if(typeof exports !== 'undefined') {
  		} else {
  			return false;
  		}
- 		
+
  		return grad.slice(f, t);
  	}
 
@@ -9709,15 +9709,15 @@ if(typeof exports !== 'undefined') {
         var miniGridConfig = {
             container: el,
             item: config.item + ':not(.is-hidden)',
-            gutter: 0 
+            gutter: 0
         };
 
         var init = function init(){
             // Flags for cancelling usage goes first :
-            // Quit early if we discover that Grid is used inside SwipeSlideshow as it brings bug with crossoverriding positioning 
+            // Quit early if we discover that Grid is used inside SwipeSlideshow as it brings bug with crossoverriding positioning
             // + grid is not really needed as we have single row all handled by slider.
             // It happens only in woocommerce carousel as of hardcoded Grid in loop-start.php
-            if(isSlideshow) return; 
+            if(isSlideshow) return;
 	        MK.core.loadDependencies([ MK.core.path.plugins + 'minigrid.js' ], create);
         };
 
@@ -9732,7 +9732,7 @@ if(typeof exports !== 'undefined') {
         var create = function create() {
             var timer = null;
 
-	        function draw() { 
+	        function draw() {
                 // Prevent plugin breaking when feeding it with hidden elements
                 $container.find(config.item).each( prepareForGrid );
 	            minigrid(miniGridConfig);
@@ -9744,7 +9744,7 @@ if(typeof exports !== 'undefined') {
             }
 
             // init
-	        draw(); 
+	        draw();
             // If reinitializing drop existing event handler
             $(window).off('resize', redraw);
             $(window).on('resize', redraw);
@@ -9770,7 +9770,7 @@ if(typeof exports !== 'undefined') {
 (function($, window){
     'use strict';
 
-    var scrollY = MK.val.scroll; 
+    var scrollY = MK.val.scroll;
     var dynamicHeight = MK.val.dynamicHeight;
 
     var $window = $(window);
@@ -9805,7 +9805,7 @@ if(typeof exports !== 'undefined') {
 
         function bindHandlers() {
             if( isLoadBtn ) $loadBtn.on('click', handleClick);
-            if( isInfiniteScroll ) $window.on('scroll', handleScroll); 
+            if( isInfiniteScroll ) $window.on('scroll', handleScroll);
             isHandlerBinded = true;
         }
 
@@ -9870,7 +9870,7 @@ if(typeof exports !== 'undefined') {
             var containerO = 0;
             var containerH = dynamicHeight( $superContainer );
             var winH = dynamicHeight( window );
- 
+
             var setVals = function() {
                 containerO = $superContainer.offset().top;
             };
@@ -9902,7 +9902,7 @@ if(typeof exports !== 'undefined') {
 		var cols = config.cols || 8;
 		var $filterItems = null; // assign only when apply filter
 		var wall = null;
-		
+
         var init = function init() {
         	MK.core.loadDependencies([ MK.core.path.plugins + 'freewall.js' ], onDepLoad);
         };
@@ -9972,7 +9972,7 @@ if(typeof exports !== 'undefined') {
 				 .removeAttr('data-delay')
 				 .removeAttr('data-height')
 				 .removeAttr('data-width')
-				 .removeAttr('data-state'); 
+				 .removeAttr('data-state');
 		};
 
 		var destroyAll = function destroyAll() {
@@ -9987,7 +9987,7 @@ if(typeof exports !== 'undefined') {
 		};
 
         var refresh = function refresh() {
-	    	if( !wall ) return; 
+	    	if( !wall ) return;
 	    	setTimeout(wall.fitWidth.bind(wall), 5);
         };
 
@@ -10006,7 +10006,7 @@ if(typeof exports !== 'undefined') {
         		if(!isLoaded) $item.css('visibility', 'hidden');
         	});
 
-        	
+
         	$container.mk_imagesLoaded().then(function() {
         		destroyAll();
         		masonry();
@@ -10028,7 +10028,7 @@ if(typeof exports !== 'undefined') {
 
 	MK.component.Pagination.prototype = {
 		init: function init() {
-			this.cacheElements(); 
+			this.cacheElements();
 			this.bindEvents();
 		},
 
@@ -10050,12 +10050,12 @@ if(typeof exports !== 'undefined') {
 		bindEvents: function bindEvents() {
 			this.$pageLinks.on('click', this.pageClick.bind(this));
 			this.$nextLink.on('click', this.nextClick.bind(this));
-			this.$prevLink.on('click', this.prevClick.bind(this)); 
+			this.$prevLink.on('click', this.prevClick.bind(this));
 			MK.utils.eventManager.subscribe('ajaxLoaded', this.onLoad.bind(this));
 		},
 
 		pageClick: function pageClick(e) {
-			e.preventDefault(); 
+			e.preventDefault();
 			var $this = $(e.currentTarget);
 			var id = parseFloat($this.attr('data-page-id'));
 
@@ -10064,13 +10064,13 @@ if(typeof exports !== 'undefined') {
 		},
 
 		nextClick: function nextClick(e) {
-			e.preventDefault(); 
+			e.preventDefault();
 			if(this.ajaxLoader.getData('paged') === this.ajaxLoader.getData('maxPages')) return;
 			this.load(++this.lastId, $(e.currentTarget));
 		},
 
 		prevClick: function prevClick(e) {
-			e.preventDefault(); 
+			e.preventDefault();
 			if(this.ajaxLoader.getData('paged') === 1) return;
 			this.load(--this.lastId, $(e.currentTarget));
 		},
@@ -10091,9 +10091,9 @@ if(typeof exports !== 'undefined') {
 				if(response.unique === this.unique) {
 					this.removeIndicator();
 					this.scrollPage();
-			        this.$container.html(response.content);  
-				}   
-			}         
+			        this.$container.html(response.content);
+				}
+			}
         },
 
         updatePagination: function updatePagination() {
@@ -10141,7 +10141,7 @@ if(typeof exports !== 'undefined') {
 						self.$pageLinks.hide();
 					} else {
 						if(i > self.ajaxLoader.getData('maxPages') - 1) $link.hide();
-						else $link.show();						
+						else $link.show();
 					}
 
 				});
@@ -10155,8 +10155,8 @@ if(typeof exports !== 'undefined') {
 
         scrollPage: function scrollPage() {
             var containerOffset = this.$container.offset().top;
-            var offset = containerOffset - MK.val.offsetHeaderHeight( containerOffset ) - 20; 
-            MK.utils.scrollTo( offset ); 
+            var offset = containerOffset - MK.val.offsetHeaderHeight( containerOffset ) - 20;
+            MK.utils.scrollTo( offset );
         },
 
         removeIndicator: function removeIndicator() {
@@ -10206,10 +10206,10 @@ if(typeof exports !== 'undefined') {
 			offset = clientRect.top;
 			elHeight = clientRect.height;
 			headerHeight = val.offsetHeaderHeight( offset );
-			offset = offset - headerHeight + val.scroll(); 
+			offset = offset - headerHeight + val.scroll();
 
-			setPosition(); 
-			setSize( ); 
+			setPosition();
+			setSize( );
 		};
 
 
@@ -10222,7 +10222,7 @@ if(typeof exports !== 'undefined') {
         var setSize = function() {
         	$this.css( 'height', '' );
         	winH = $window.height() - headerHeight;
-        	h = obj.getBoundingClientRect().height; 
+        	h = obj.getBoundingClientRect().height;
 
         	if( config.speed <= 1 && config.speed > 0 ) {
         		if( offset === 0 ) {
@@ -10234,29 +10234,29 @@ if(typeof exports !== 'undefined') {
 	        		$this.css({
 						height : h + ( (winH - h) * config.speed ),
 	        			backgroundAttachment: 'scroll',
-	        			'will-change': 'transform' 
-	        		}); 
+	        			'will-change': 'transform'
+	        		});
 	        	}
 
         	} else if ( config.speed > 1 && h <= winH ) {
         		$this.css({
         			// good for full heights - 2 because it's viewable by 2 screen heights
-        			height: ( winH  +  ( ( winH * config.speed ) - winH ) * 2 ),  
+        			height: ( winH  +  ( ( winH * config.speed ) - winH ) * 2 ),
         			top: -( ( winH * config.speed ) - winH ),
         			backgroundAttachment: 'scroll',
         			'will-change': 'transform'
-        		}); 
+        		});
 
         	} else if ( config.speed > 1 && h > winH ) {
         		proportion = h / winH;
         		height = ( winH  +  ( ( winH * config.speed ) - winH ) * (1 + proportion) );
- 
+
         		$this.css({
         			height: height,
         			top: -( height - (winH * config.speed) ),
         			backgroundAttachment: 'scroll',
         			'will-change': 'transform'
-        		}); 
+        		});
 
         	} else if ( config.speed < 0 && h >= winH ) {
         		height = h * (1  - config.speed);
@@ -10265,7 +10265,7 @@ if(typeof exports !== 'undefined') {
         			top: h - height,
         			backgroundAttachment: 'scroll',
         			'will-change': 'transform'
-        		});   
+        		});
 
         	} else if ( config.speed < 0 && h < winH ) {
         		// candidate to change
@@ -10276,7 +10276,7 @@ if(typeof exports !== 'undefined') {
         			top: -height,
         			backgroundAttachment: 'scroll',
         			'will-change': 'transform'
-        		});         		
+        		});
         	}
         };
 
@@ -10293,9 +10293,9 @@ if(typeof exports !== 'undefined') {
 			endPoint = offset + elHeight + winH - headerHeight;
 			scrollY = val.scroll();
 
-			if( scrollY < startPoint || scrollY > endPoint ) { 
+			if( scrollY < startPoint || scrollY > endPoint ) {
 				ticking = false;
-				return; 
+				return;
 			}
 
 			currentPoint = (( -offset + scrollY ) * config.speed);
@@ -10306,12 +10306,12 @@ if(typeof exports !== 'undefined') {
               	'-ms-transform': 'translateY(' + currentPoint + 'px) translateZ(0)',
               	'-o-transform': 'translateY(' + currentPoint + 'px) translateZ(0)',
               	'transform': 'translateY(' + currentPoint + 'px) translateZ(0)'
-            });  
+            });
 
 			ticking = false;
 		};
 
- 
+
 		var requestTick = function() {
 			if( !ticking && !isMobile ) {
 				ticking = true;
@@ -10320,7 +10320,7 @@ if(typeof exports !== 'undefined') {
 		};
 
 
-		var init = function() { 
+		var init = function() {
 			// Disable scroll effects when smooth scroll is disabled
 			if( !MK.utils.isSmoothScroll ) { return; }
 
@@ -10329,11 +10329,11 @@ if(typeof exports !== 'undefined') {
 			$window.on( 'load', update );
 			$window.on( 'resize', update );
 	        window.addResizeListener( container, update );
-	        
+
 			$window.on( 'scroll', requestTick );
 		};
-		
- 
+
+
 		return {
 			init : init
 		};
@@ -10378,7 +10378,7 @@ if(typeof exports !== 'undefined') {
 	// Image added for proportional scaling
 	MK.ui.loader = {
 		tpl : function() {
-			return '<div class="mk-loading-indicator">' + 
+			return '<div class="mk-loading-indicator">' +
 						'<div class="mk-loading-indicator__inner">' +
 							'<div class="mk-loading-indicator__icon"></div>' +
 							'<img style="height:100%; width:auto;" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">' +
@@ -10417,7 +10417,7 @@ if(typeof exports !== 'undefined') {
 	    	$(this).css('margin-top', val / 100);
 	    };
 
-	    $(window).on("scroll", function () {	    	
+	    $(window).on("scroll", function () {
 	    	window.requestAnimationFrame(onScroll);
 	    });
 	 }
@@ -10436,11 +10436,11 @@ if(typeof exports !== 'undefined') {
 	$(window).on('resize', handleResize);
     MK.utils.eventManager.subscribe('ajaxLoaded', handleAjax); // ajax loops
     MK.utils.eventManager.subscribe('ajax-preview', handleAjax); // ajax poretfolio
-    MK.utils.eventManager.subscribe('quickViewOpen', handleAjax); 
+    MK.utils.eventManager.subscribe('quickViewOpen', handleAjax);
 
 	function run($imgs) {
 		if(!$imgs.length) return; // Do not run if empty collection
-		$imgs.each(setSrcAttr);		
+		$imgs.each(setSrcAttr);
 	}
 
 	function setSrcAttr() {
@@ -10456,7 +10456,7 @@ if(typeof exports !== 'undefined') {
 
 	function getViewportClass() {
 		if(window.matchMedia('(max-width: 736px)').matches) return 0;
-		else return 1; 
+		else return 1;
 	}
 
 	function handleResize() {
@@ -10498,19 +10498,19 @@ if(typeof exports !== 'undefined') {
 			offset = $this.offset().top ,
 			nextOffset = utils.nextHigherVal( offset, utils.offsets( $topLevelSections ) );
 
-		utils.scrollTo( nextOffset - val.offsetHeaderHeight( nextOffset ) ); 
+		utils.scrollTo( nextOffset - val.offsetHeaderHeight( nextOffset ) );
 	});
 
 })( jQuery );
 (function($) {
 	'use strict';
 
-	// 
+	//
 	// Constructor
-	// 
+	//
 	// /////////////////////////////////////////////////////////
 
-	MK.ui.Slider = function( container, config ) { 
+	MK.ui.Slider = function( container, config ) {
 
 		var defaults = {
 				slide 				: '.mk-slider-slide',
@@ -10555,11 +10555,11 @@ if(typeof exports !== 'undefined') {
 		this.timerRemaining = parseInt(this.config.displayTime);
 	};
 
-	
 
-	// 
+
+	//
 	// Shared methods
-	// 
+	//
 	// /////////////////////////////////////////////////////////
 
 	MK.ui.Slider.prototype = {
@@ -10582,7 +10582,7 @@ if(typeof exports !== 'undefined') {
 			this.timeline.build();
 
 			if( this.config.hasPagination ) { this.buildPagination(); }
-			
+
 			if( this.config.autoplay && document.hasFocus() ) { this.setTimer(); }
 
 			if( typeof this.config.onInitialize === 'function' ) {
@@ -10606,7 +10606,7 @@ if(typeof exports !== 'undefined') {
 
 
 		cacheElements : function () {
-			this.container = this.isNode( this.container ) ? this.container 
+			this.container = this.isNode( this.container ) ? this.container
 				: document.querySelectorAll( this.container )[0];
 			this.slides = this.container.querySelectorAll( this.config.slide );
 			this.$slides = $(this.slides);
@@ -10642,8 +10642,8 @@ if(typeof exports !== 'undefined') {
 			else if(window.matchMedia( '(max-width: 767px)' ).matches && this.initPerView >= 2 ) { this.config.slidesPerView = 2; }
 			else if(window.matchMedia( '(max-width: 1024px)' ).matches && this.initPerView >= 3 ) { this.config.slidesPerView = 3; }
 			else { this.config.slidesPerView = this.initPerView; }
-			
-        	if( typeof this.slides === 'undefined' ) return; 
+
+        	if( typeof this.slides === 'undefined' ) return;
 			this.getSlideSize();
 			this.setSize();
 			this.setPos();
@@ -10672,7 +10672,7 @@ if(typeof exports !== 'undefined') {
 				moveForward = $this.data( 'direction' ) === 'next';
 
 
-			if( this.config.autoplay ) { 
+			if( this.config.autoplay ) {
 				this.unsetTimer();
 				setTimeout( this.setTimer.bind( this ), this.config.transitionTime );
 			}
@@ -10719,7 +10719,7 @@ if(typeof exports !== 'undefined') {
 				this.state.moveForward = false;
 			}
 
-			if( this.config.autoplay ) { 
+			if( this.config.autoplay ) {
 				this.unsetTimer();
 				setTimeout( this.setTimer.bind( this ), this.config.transitionTime );
 			}
@@ -10728,13 +10728,13 @@ if(typeof exports !== 'undefined') {
 			this.timeline.play();
 
 			this.setActive( id );
-			if( this.config.fluidHeight ) { this.setHeight( id ); } 
+			if( this.config.fluidHeight ) { this.setHeight( id ); }
 		},
 
 
 		windowActive : function() {
 			this.setTimer(false, true);
-			$(this.container).removeClass('is-paused'); 
+			$(this.container).removeClass('is-paused');
 		},
 
 
@@ -10795,7 +10795,7 @@ if(typeof exports !== 'undefined') {
 
 
 		setPos : function() {
-        	if( typeof this.slides === 'undefined' ) return; 
+        	if( typeof this.slides === 'undefined' ) return;
 		    var id 			= this.state.id,
 		    	i 			= 0,
 		    	len 		= this.slides.length,
@@ -10834,7 +10834,7 @@ if(typeof exports !== 'undefined') {
         // When we're setting animation along Y axis we're going to set up height
         // otherwise width. It is shared amongst all slides
         setSize : function() {
-        	if( typeof this.slides === 'undefined' ) return; 
+        	if( typeof this.slides === 'undefined' ) return;
         	var i = 0,
 		    	len = this.slides.length,
 		    	axis = this.animation[ this.config.effect ].axis,
@@ -10858,7 +10858,7 @@ if(typeof exports !== 'undefined') {
 				$activeSlide = $slides.eq( id );
 
         	var currentHeight = $activeSlide.height();
-        	$( this.container ).height( currentHeight ); 
+        	$( this.container ).height( currentHeight );
         },
 
 
@@ -10872,12 +10872,12 @@ if(typeof exports !== 'undefined') {
         		height = Math.max(height, $(this).find('> div').outerHeight());
         	});
 
-        	$( this.container ).height( height ); 
+        	$( this.container ).height( height );
         },
 
 
         // Little utility inspired by GreenSock.
-        // We export this to this.timeline on init. 
+        // We export this to this.timeline on init.
         prepareTimeline : function( time ) {
 			var self 		= this,
 				iteration 	= 0,
@@ -10885,8 +10885,8 @@ if(typeof exports !== 'undefined') {
             	animLoop 	= [],
             	aL 			= 0, // animation length
             	loops 		= 1,
-				ease 		= this.config.ease, 
-				currentStyle, timeProg, 
+				ease 		= this.config.ease,
+				currentStyle, timeProg,
 				build, move, add, play, reverse, progress, kill;
 
 
@@ -10939,8 +10939,8 @@ if(typeof exports !== 'undefined') {
 						style = animActi;
 	            	}
 
-               	 	zIFlow = (self.state.moveForward) ? animNext.zIndex : animPrev.zIndex; 
-	                if( zIFlow ) { 
+               	 	zIFlow = (self.state.moveForward) ? animNext.zIndex : animPrev.zIndex;
+	                if( zIFlow ) {
 	                	// console.log( zIFlow );
 	                	self.slides[ slideId ].style.zIndex = (zIFlow === '+') ? i + 1 : len - i;
 	                }
@@ -10977,13 +10977,13 @@ if(typeof exports !== 'undefined') {
 					// ceil to handle properly play after mouse up / touch end
 					iteration = Math.ceil(startProg * currentTotalIter);
 				}
-				
+
 				timeProg = iteration / currentTotalIter;
 				progress( timeProg );
 
 				// Break loop
-				if( iteration >= currentTotalIter && mode === 'play' || 
-					iteration <= 0 && mode === 'reverse' ) { 
+				if( iteration >= currentTotalIter && mode === 'play' ||
+					iteration <= 0 && mode === 'reverse' ) {
 
 					self.state.running = false;
 					iteration = 0;
@@ -11004,7 +11004,7 @@ if(typeof exports !== 'undefined') {
 						self.config.onAfterSlide( self.state.id );
 					}
 
-					return; 
+					return;
 				}
 
 				// Run in given mode
@@ -11034,7 +11034,7 @@ if(typeof exports !== 'undefined') {
 			};
 
 			progress = function( progVal ) {
-            	var aI = 0, 
+            	var aI = 0,
             		currentStyle;
 
 				for( aI; aI < aL; aI++ ) {
@@ -11044,7 +11044,7 @@ if(typeof exports !== 'undefined') {
 						currentStyle = self.currentStyle( progVal, animLoop[ aI ][ 1 ], 'linearEase' );
 					} else if ( progVal === 0 ) {
 						currentStyle = self.currentStyle( progVal, animLoop[ aI ][ 1 ], 'linearEase' );
-					} 
+					}
 					self.setStyle( animLoop[ aI ][ 0 ], currentStyle );
 				}
 			};
@@ -11121,13 +11121,13 @@ if(typeof exports !== 'undefined') {
 						if( transProp === 'translateZ' ) { continue; }
 
 						currentVals = style.transform[ transProp ];
-						currentStyle.transform[ transProp ] = 
+						currentStyle.transform[ transProp ] =
 							// (currentIteration, startValue, changeInValue, totalIterations)
 								self.ease[ ease ]( progress, currentVals[ 0 ], currentVals[ 1 ], 1 );
 					}
 				} else {
 					currentVals = style[ styleProp ];
-					currentStyle[ styleProp ] = 
+					currentStyle[ styleProp ] =
 						self.ease[ ease ]( progress, currentVals[ 0 ], currentVals[ 1 ], 1 );
 				}
 			}
@@ -11151,7 +11151,7 @@ if(typeof exports !== 'undefined') {
 			if( this.activeTimer ) {
 				// console.log( 'clearActive' );
 				clearTimeout( this.activeTimer );
-			} 
+			}
 
 			this.activeTimer = setTimeout( function() {
 				// console.log('setActive');
@@ -11168,7 +11168,7 @@ if(typeof exports !== 'undefined') {
 				$slide.attr('data-timer', (video.duration * 1000));
 			}
 		},
-		
+
 		setTimer : function( isFirst, isPaused ) {
 			// check for custom timer
 			var customTimer = this.$slides.eq(this.nextId(this.state.moveForward ? 1 : -1)).data('timer'),
@@ -11183,7 +11183,7 @@ if(typeof exports !== 'undefined') {
 			this.timer = true;
 			this.lastSetTimer = Date.now();
 
-			create = function() {	
+			create = function() {
 
 				if( self.autoplay ) { clearTimeout( self.autoplay ); }
 				if( !self.timer ) {
@@ -11259,7 +11259,7 @@ if(typeof exports !== 'undefined') {
 			}
 
 		    if( !transform ) { return; }
-	
+
 			// Run regex assignment
 			while( match = regex.exec( transform ) ) {
 				T[ match[ 1 ] ] = parseFloat( match[ 2 ] );
@@ -11270,7 +11270,7 @@ if(typeof exports !== 'undefined') {
 
 		isNode : function( o ) {
 			return (
-		    	typeof Node === "object" ? o instanceof Node : 
+		    	typeof Node === "object" ? o instanceof Node :
 		   			o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
 		  	);
 		},
@@ -11279,7 +11279,7 @@ if(typeof exports !== 'undefined') {
 		dragHandler : function() {
 			var self = this,
 				$container = $( this.container ),
-				prevBuild = false, 
+				prevBuild = false,
 				nextBuild = false,
 				dragging = false,
 				buffor = 5, // helpful for decoupling with click events
@@ -11338,7 +11338,7 @@ if(typeof exports !== 'undefined') {
 						if( self.config.fluidHeight ) { self.setHeight( self.nextId( prog < 0 ? 1 : -1 ) ); }
 					} else {
 						self.timeline.reverse( absProg );
-						// eventually move this to reverse callbacks	
+						// eventually move this to reverse callbacks
 						if(prog < 0) {
 							self.updateId( -1 );
 						} else {
@@ -11412,7 +11412,7 @@ if(typeof exports !== 'undefined') {
 
 		dynamicVal : function() {
 			var $window = $( window ),
-				update, 
+				update,
 				getViewportW, viewportW;
 
 			update = function() {
@@ -11435,15 +11435,15 @@ if(typeof exports !== 'undefined') {
 
 
 
-	// 
+	//
 	// Set of default animations
-	// 
+	//
 	// /////////////////////////////////////////////////////////
 
 	MK.ui.Slider.prototype.animation = {
 
         slide : {
-        	axis : 'X', 
+        	axis : 'X',
             next : { transform: {} },
             active : { transform: {} },
             prev : { transform: {} }
@@ -11458,20 +11458,20 @@ if(typeof exports !== 'undefined') {
 
         perspective_flip : {
         	axis : 'Y',
-            next : { 
+            next : {
             	transform: {
             		rotateX : 80
-            	} 
+            	}
             },
-            active : { 
+            active : {
             	transform: {
             		rotateX : 0
-            	} 
+            	}
             },
-            prev : { 
+            prev : {
             	transform: {
             		rotateX : 0
-            	} 
+            	}
             }
         },
 
@@ -11609,42 +11609,42 @@ if(typeof exports !== 'undefined') {
 
 
 
-	// 
+	//
 	// Penner's easing library
-	// 
+	//
 	// /////////////////////////////////////////////////////////
 
 	MK.ui.Slider.prototype.ease = {
 		/*
 		 *
 		 * TERMS OF USE - EASING EQUATIONS
-		 * 
-		 * Open source under the BSD License. 
-		 * 
+		 *
+		 * Open source under the BSD License.
+		 *
 		 * Copyright Â© 2001 Robert Penner
 		 * All rights reserved.
-		 * 
-		 * Redistribution and use in source and binary forms, with or without modification, 
+		 *
+		 * Redistribution and use in source and binary forms, with or without modification,
 		 * are permitted provided that the following conditions are met:
-		 * 
-		 * Redistributions of source code must retain the above copyright notice, this list of 
+		 *
+		 * Redistributions of source code must retain the above copyright notice, this list of
 		 * conditions and the following disclaimer.
-		 * Redistributions in binary form must reproduce the above copyright notice, this list 
-		 * of conditions and the following disclaimer in the documentation and/or other materials 
+		 * Redistributions in binary form must reproduce the above copyright notice, this list
+		 * of conditions and the following disclaimer in the documentation and/or other materials
 		 * provided with the distribution.
-		 * 
-		 * Neither the name of the author nor the names of contributors may be used to endorse 
+		 *
+		 * Neither the name of the author nor the names of contributors may be used to endorse
 		 * or promote products derived from this software without specific prior written permission.
-		 * 
-		 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+		 *
+		 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 		 * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 		 * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 		 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
 		 * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-		 * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+		 * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
 		 * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-		 * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
-		 * OF THE POSSIBILITY OF SUCH DAMAGE. 
+		 * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+		 * OF THE POSSIBILITY OF SUCH DAMAGE.
 		 *
 		 */
 		linearEase : function(currentIteration, startValue, changeInValue, totalIterations) {
@@ -11759,7 +11759,7 @@ if(typeof exports !== 'undefined') {
 /* -------------------------------------------------------------------- */
 (function($) {
     'use strict';
-	
+
     MK.component.SocialShare = function( el ) {
         var networks = {
 			twitter : 'http://twitter.com/intent/tweet?text={title} {url}',
@@ -11772,8 +11772,8 @@ if(typeof exports !== 'undefined') {
         this.networks = networks;
         this.el = el;
     };
-	
-	
+
+
 	MK.component.SocialShare.prototype = {
 
         init : function() {
@@ -11783,8 +11783,8 @@ if(typeof exports !== 'undefined') {
 
         cacheElements : function() {
             this.$this  = $( this.el );
-           
-           
+
+
         },
 
         bindEvents : function() {
@@ -11793,10 +11793,10 @@ if(typeof exports !== 'undefined') {
 			$.each(this.networks, function( key, value ) {
 				  thisObject.$tempClass = $('.' + key + '-share');
 				  thisObject.$tempClass.click(thisObject.openSharingDialog.bind(self, this, key));
-				
+
 			});
         },
-		
+
         openSharingDialog : function(url, site, args) {
 			var urlWrapper = url;
 			var rx = new RegExp('\{[a-z]*\}','g'), res;
@@ -11807,19 +11807,19 @@ if(typeof exports !== 'undefined') {
 				if (attValue === undefined || attValue === null) {
 					attValue = "";
 				}
-				attValue = attValue.replace('#', '%23'); // fix for twitter description 
+				attValue = attValue.replace('#', '%23'); // fix for twitter description
 				urlWrapper = urlWrapper.replace(match, attValue);
 				match = rx.exec(url);
 			}
-			
+
 			window.open(urlWrapper, site + "Window", "height=320,width=660,resizable=0,toolbar=0,menubar=0,status=0,location=0,scrollbars=0");
-            
+
         },
 
-       
+
     };
-	
-	
+
+
 	//////////////////////////////////////////
     //
     // Apply to:
@@ -11834,7 +11834,7 @@ if(typeof exports !== 'undefined') {
         var socialShare = new MK.component.SocialShare(this);
 			socialShare.init();
     });
-	
+
 })(jQuery);
 
 
@@ -11927,7 +11927,7 @@ if(typeof exports !== 'undefined') {
             this.currentId = clickedId;
 
             // Notify rest of the app
-            MK.utils.eventManager.publish('item-expanded');            
+            MK.utils.eventManager.publish('item-expanded');
         },
 
         show : function( id ) {
@@ -11977,7 +11977,7 @@ function mk_tabs_responsive(){
   //     }
   //   }
   // });
-  
+
 }
 
 
@@ -11985,7 +11985,7 @@ function mk_tabs_responsive(){
 	'use strict';
 
 	MK.component.Sortable = function(el) {
-		this.el = el; 
+		this.el = el;
 	};
 
 	MK.component.Sortable.prototype = {
@@ -12025,7 +12025,7 @@ function mk_tabs_responsive(){
 	        else this.inPage(term);
 		},
 
-		inDB: function inDB(term, $item) { 
+		inDB: function inDB(term, $item) {
 			// Add load indicator only for long requests
 			MK.ui.loader.remove(this.$filter);
 			MK.ui.loader.add($item);
@@ -12116,7 +12116,7 @@ function mk_tabs_responsive(){
         $rootLevelEls.each( function rootLevelEl() {
             var $animateEl = $(this).find( '.mk-animate-element' );
             $animateEl.each( spyViewport );
-        });   
+        });
     };
 
     var spyViewport = function spyViewport(i) {
@@ -12161,23 +12161,23 @@ function mk_tabs_responsive(){
 }(jQuery));
 // (function($) {
 //     'use strict';
-	
+
 //     MK.component.WoocommerceAddToCard = function( el ) {
 //         var defaults = {
 //             addToCardIcon : '<svg class="mk-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M437.011 74.99c-46.326-46.328-110.318-74.99-181.011-74.99-109.744 0-203.345 69.064-239.749 166.094l59.938 22.477c27.302-72.773 97.503-124.571 179.811-124.571 53.02 0 101.01 21.5 135.753 56.247l-71.753 71.753h192v-192l-74.989 74.99zm-181.011 373.01c-53.02 0-101.013-21.496-135.756-56.244l71.756-71.756h-192v192l74.997-74.997c46.323 46.331 110.309 74.997 181.003 74.997 109.745 0 203.346-69.064 239.75-166.094l-59.938-22.477c-27.302 72.773-97.503 124.571-179.812 124.571z"/></svg>',
 // 			addedToCardIcon : '<svg class="mk-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M432 64l-240 240-112-112-80 80 192 192 320-320z"/></svg>'
-			
+
 //         },addToCardButton, addToCardIconHolder, iconWrapper;
 
 //         this.config = defaults;
 //         this.el = el;
 // 		//var self = this;
-		
-		
-		
+
+
+
 //     };
-	
-	
+
+
 // 	MK.component.WoocommerceAddToCard.prototype = {
 
 //         init : function() {
@@ -12190,29 +12190,29 @@ function mk_tabs_responsive(){
 //             this.$addToCardButton  = $('.add_to_cart_button');
 //             this.$addToCardIconHolder  = this.getCardIconHolder(this.$addToCardButton);
 //             this.$iconWrapper = this.getIconWrapper(this.$addToCardIconHolder);
-           
+
 //         },
 
 //         bindEvents : function() {
-        
+
 //             this.$addToCardButton.on( 'click', this.showLoading.bind( self, this) );
 //             this.$this.bind( 'added_to_cart', this.showSuccess.bind( self, this) );
-			
+
 //         },
-		
+
 // 		getCardIconHolder : function (addToCardButton) {
 // 			return addToCardButton.parents('.product:eq(0)');
 // 		},
-		
+
 //         getIconWrapper : function (addToCardIconHolder) {
 // 			return addToCardIconHolder.find('.product-loading-icon');
 // 		},
-		
+
 //         showLoading : function(e, args) {
-			
+
 // 			e.$addToCardIconHolder.addClass('adding-to-cart').removeClass('added-to-cart');
 // 			e.$iconWrapper.html(e.config.addToCardIcon);
-            
+
 //         },
 
 //         showSuccess : function(e, args) {
@@ -12220,8 +12220,8 @@ function mk_tabs_responsive(){
 // 			 e.$iconWrapper.html(e.config.addedToCardIcon);
 //         }
 //     };
-	
-	
+
+
 // 	 // ///////////////////////////////////////
 //     //
 //     // Apply to:
@@ -12236,7 +12236,7 @@ function mk_tabs_responsive(){
 //         var addToCardButton = new MK.component.WoocommerceAddToCard(this);
 // 			addToCardButton.init();
 //     });
-	
+
 // })(jQuery);
 
 
@@ -12261,8 +12261,8 @@ function product_loop_add_cart() {
      $holder.removeClass('adding-to-cart').addClass('added-to-cart');
      $i.html(icon);
  });
- 
- 
+
+
 
 }
 
@@ -12290,11 +12290,11 @@ function product_loop_add_cart() {
         MK.core.initAll( document );
         MK.utils.scrollToURLHash();
         // TODO move preloader to components and manage it state from within
-        setTimeout( function() { 
-            MK.ui.preloader.hide(); // site wide 
+        setTimeout( function() {
+            MK.ui.preloader.hide(); // site wide
             $('.mk-preloader').hide(); // components
             $('body').removeClass('loading');
-        }, 150 ); 
+        }, 150 );
     });
 
     /**
@@ -12310,7 +12310,7 @@ function product_loop_add_cart() {
         var currentPage = loc.origin + loc.pathname;
         var href = $this.attr( 'href' );
         var linkSplit = (href) ? href.split( '#' ) : '';
-        var hrefPage  = linkSplit[0] ? linkSplit[0] : ''; 
+        var hrefPage  = linkSplit[0] ? linkSplit[0] : '';
         var hrefHash  = linkSplit[1] ? linkSplit[1] : '';
 
         if( anchor.length ) {
@@ -12321,5 +12321,5 @@ function product_loop_add_cart() {
             evt.preventDefault();
         }
     }
-    
+
 }(jQuery));}(jQuery))

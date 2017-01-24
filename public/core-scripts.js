@@ -6293,11 +6293,6 @@ $(document).ready(function() {
         debounceResize = setTimeout( onDebouncedResize, 300 );
     });
 
-    // This is needed for third party plugins that load content via ajax
-    /*$(document).ajaxSuccess(function() {
-      MK.utils.eventManager.publish('ajaxLoaded');
-    });*/
-
     var onDebouncedScroll = function() {
         mk_skill_meter();
         //TODO: Ask to Bart how we can call javascript component
@@ -6974,6 +6969,32 @@ videoLoadState();
 
     });
 }(jQuery));
+
+
+/* Remove video section when on mobile */
+/* -------------------------------------------------------------------- */
+(function($) {
+    if ( MK.utils.isMobile() ) {
+      $('.mk-section-video video').remove();
+    }
+}(jQuery));
+
+
+/* Yith AJAX Product Filter & Yith Infinite Scrolling Plugin Fix
+/* -------------------------------------------------------------------- */
+(function($) {
+    $(window).on('load', function() {
+
+        $(document).on( 'yith-wcan-ajax-filtered yith_infs_added_elem yith-wcan-ajax-reset-filtered', function(){
+            setTimeout( function() {
+                MK.utils.eventManager.publish('ajaxLoaded');
+                MK.core.initAll( document );
+            }, 1000 );
+        });
+
+    });
+}(jQuery));
+
 function mk_accordion_toggles_tooltip() {
 
   "use strict";
@@ -7132,9 +7153,6 @@ function mk_backgrounds_parallax() {
   }
   if (mk_banner_parallax == true) {
     $('.mk-header').addClass('mk-parallax-enabled');
-  }
-  if (mk_page_parallax == true) {
-    $('#theme-page').addClass('mk-parallax-enabled');
   }
   if (mk_footer_parallax == true) {
     $('#mk-footer').addClass('mk-parallax-enabled');
@@ -8193,6 +8211,27 @@ function mk_skill_meter() {
 //         });
 //     });
 // }
+/* Toolbar subscribe form */
+/* -------------------------------------------------------------------- */
+
+$( "#mc-embedded-subscribe-form" ).submit(function( e ){
+    var $this = $(this);
+  
+    e.preventDefault();
+    $.ajax({
+        url: MK.core.path.ajaxUrl,
+        type: "POST",
+        data: {
+            action: "mk_ajax_subscribe",
+            email: $this.find( ".mk-subscribe--email" ).val(),
+            list_id: $this.find( ".mk-subscribe--list-id" ).val(),
+            optin: $this.find( ".mk-subscribe--optin" ).val()
+        },
+        success: function ( res ) {
+            $this.parent().find( ".mk-subscribe--message" ).html( $.parseJSON( res ).message );
+        }
+    });
+});
 /**
  * Add class to tag. It's vanilla js instead of jQuery.
  * @param tag
@@ -8866,6 +8905,16 @@ if(typeof exports !== 'undefined') {
 			var self = this;
 			var seq = ++this.xhrCounter;
             this.isLoading = true;
+			
+			// If mk-ajax-loaded-posts span exists, get the post ids
+			if ( this.$container.siblings('.mk-ajax-loaded-posts').length ) {
+				var loaded_posts = this.$container.siblings('.mk-ajax-loaded-posts').attr('data-loop-loaded-posts');
+				
+				// Do not send looaded posts for Classic Pagination Navigation
+				if ( this.$container.attr('data-pagination-style') != 1 ) {
+					self.data.loaded_posts = loaded_posts.split(',');
+				}
+			}
 
             return $.when(
 	            $.ajax({
@@ -8879,15 +8928,22 @@ if(typeof exports !== 'undefined') {
 		},
 
 		onDone: function(response, unique, seq) {
-	  		if(seq === this.xhrCounter) {
+			if(seq === this.xhrCounter) {
 				var self = this;
 
 				response = $.parseJSON(response);
-				response.unique = unique;
+				response.unique = parseInt(unique, 10);
 				response.id = this.id;
+				
+				// If mk-ajax-loaded-posts span exists, update current post ids 
+				// with new post ids from server's response
+				if ( this.$container.siblings('.mk-ajax-loaded-posts').length ) {
+					this.$container.siblings('.mk-ajax-loaded-posts').attr('data-loop-loaded-posts', response.loaded_posts);
+				}
 
 	            this.setData({
 	                maxPages: response.maxPages,
+	                found_posts: response.found_posts,
 	                loop_iterator: response.i
 	            });
 
@@ -8955,6 +9011,7 @@ if(typeof exports !== 'undefined') {
 			imgs = $this.data('mk-img-set');
 
 		$this.css('background-image', 'url('+ getImage(imgs) +')');
+		$this.find('.mk-adaptive-image').attr('src', getImage(imgs)); 
 	}
 
 	// Keep track of current screen size while resizing but update device reference 
@@ -9021,6 +9078,58 @@ if(typeof exports !== 'undefined') {
 	}
 
 }(jQuery));
+(function( $ ) {
+	'use strict';
+
+	var val = MK.val;
+
+	MK.component.FullHeight = function( el ) {
+		var $window = $( window ),
+			$this = $( el ),
+			config = $this.data( 'fullheight-config' ),
+			container = document.getElementById( 'mk-theme-container' ),
+			minH = (config && config.min) ? config.min : 0,
+			winH = null,
+			height = null,
+			update_count = 0,
+			testing = MK.utils.getUrlParameter('testing'),
+			offset = null;
+
+		// We need to provide height on the same specificity level for workaround to IE bug
+		// connect.microsoft.com/IE/feedback/details/802625/min-height-and-flexbox-flex-direction-column-dont-work-together-in-ie-10-11-preview
+		// stackoverflow.com/questions/19371626/flexbox-not-centering-vertically-in-ie
+		if(MK.utils.browser.name === ('IE' || 'Edge')) $this.css( 'height', '1px' );
+
+		var update = function() {
+
+			if(update_count === 0) {
+				winH = $window.height();
+				// for correct calculate
+				offset = $this.offset().top - 1;
+				height = Math.max(minH, winH - val.offsetHeaderHeight( offset ));
+				$this.css( 'min-height', height );
+				if(testing !== undefined )
+				update_count++;
+			}
+
+		};
+
+		// TODO remove scroll listener by dynamic offset reader
+		var init = function() {
+			update();
+			$window.on( 'resize', update );
+			$window.on( 'scroll', update );
+			window.addResizeListener( container, update );
+		};
+
+		return {
+			init : init
+		};
+	};
+
+})( jQuery );
+
+
 (function( $ ) {
 	'use strict';
 
@@ -9239,6 +9348,7 @@ if(typeof exports !== 'undefined') {
 				network = $this.data( 'network' ),
 				id = this.config.id,
 				url = this.config.url,
+				title = this.$wrapper.find( '.slick-title' ).text(),
 				name;
 				var picture = this.$slides.filter( this.dom.active ).children().first().attr( 'src' );
 			switch( network ) {
@@ -9251,7 +9361,7 @@ if(typeof exports !== 'undefined') {
 					name = 'Twitter Share';
 					break;
 				case 'pinterest':
-					url = 'http://pinterest.com/pin/create/button/?url=' + url + '#id=' + id;
+					url = 'http://pinterest.com/pin/create/bookmarklet/?media=' + picture + '&url=' + url + '&is_video=false&description=' + title;
 					// other available link paranmeters: media, description
 					name = 'Pinterest Share';
 					break;
@@ -9263,56 +9373,72 @@ if(typeof exports !== 'undefined') {
 	};
 
 })( jQuery );
-(function( $ ) {
-	'use strict';
+(function($) {
+    'use strict';
 
-	var val = MK.val;
+    MK.component.Grid = function( el ) {
+    	var $container = $(el);
+    	var config = $container.data( 'grid-config' );
+        var isSlideshow = $container.closest('[data-mk-component="SwipeSlideshow"]').length;
+        var miniGridConfig = {
+            container: el,
+            item: config.item + ':not(.is-hidden)',
+            gutter: 0 
+        };
 
-	MK.component.FullHeight = function( el ) {
-		var $window = $( window ),
-			$this = $( el ),
-			config = $this.data( 'fullheight-config' ),
-			container = document.getElementById( 'mk-theme-container' ),
-			minH = (config && config.min) ? config.min : 0,
-			winH = null,
-			height = null,
-			update_count = 0,
-			testing = MK.utils.getUrlParameter('testing'),
-			offset = null;
+        var init = function init(){
+            // Flags for cancelling usage goes first :
+            // Quit early if we discover that Grid is used inside SwipeSlideshow as it brings bug with crossoverriding positioning 
+            // + grid is not really needed as we have single row all handled by slider.
+            // It happens only in woocommerce carousel as of hardcoded Grid in loop-start.php
+            if(isSlideshow) return; 
+	        MK.core.loadDependencies([ MK.core.path.plugins + 'minigrid.js' ], create);
+        };
 
-		// We need to provide height on the same specificity level for workaround to IE bug
-		// connect.microsoft.com/IE/feedback/details/802625/min-height-and-flexbox-flex-direction-column-dont-work-together-in-ie-10-11-preview
-		// stackoverflow.com/questions/19371626/flexbox-not-centering-vertically-in-ie
-		if(MK.utils.browser.name === ('IE' || 'Edge')) $this.css( 'height', '1px' );
+        // Remove el hidden without adding proper class
+        var prepareForGrid = function prepareForGrid() {
+            var $item = $(this);
+            var isHidden = ($item.css('display') === 'none');
+            if(isHidden) $item.addClass('is-hidden');
+            else $item.removeClass('is-hidden');
+        };
 
-		var update = function() {
+        var create = function create() {
+            var timer = null;
 
-			if(update_count === 0) {
-				winH = $window.height();
-				// for correct calculate
-				offset = $this.offset().top - 1;
-				height = Math.max(minH, winH - val.offsetHeaderHeight( offset ));
-				$this.css( 'min-height', height );
-				if(testing !== undefined )
-				update_count++;
-			}
+	        function draw() { 
+                // Prevent plugin breaking when feeding it with hidden elements
+                $container.find(config.item).each( prepareForGrid );
+	            minigrid(miniGridConfig);
+	        }
 
-		};
+            function redraw() {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(draw, 100);
+            }
 
-		// TODO remove scroll listener by dynamic offset reader
-		var init = function() {
-			update();
-			$window.on( 'resize', update );
-			$window.on( 'scroll', update );
-			window.addResizeListener( container, update );
-		};
+            // init
+	        draw(); 
+            // If reinitializing drop existing event handler
+            $(window).off('resize', redraw);
+            $(window).on('resize', redraw);
+            MK.utils.eventManager.subscribe('item-expanded', redraw);
+            MK.utils.eventManager.subscribe('ajaxLoaded', redraw);
+            MK.utils.eventManager.subscribe('staticFilter', redraw);
+        };
 
-		return {
-			init : init
-		};
-	};
+        return {
+         	init : init
+        };
+    };
 
-})( jQuery );
+})(jQuery);
+
+
+
+
+
+
 
 
 /**
@@ -9699,74 +9825,6 @@ if(typeof exports !== 'undefined') {
 	}
 
 }(jQuery));
-(function($) {
-    'use strict';
-
-    MK.component.Grid = function( el ) {
-    	var $container = $(el);
-    	var config = $container.data( 'grid-config' );
-        var isSlideshow = $container.closest('[data-mk-component="SwipeSlideshow"]').length;
-        var miniGridConfig = {
-            container: el,
-            item: config.item + ':not(.is-hidden)',
-            gutter: 0 
-        };
-
-        var init = function init(){
-            // Flags for cancelling usage goes first :
-            // Quit early if we discover that Grid is used inside SwipeSlideshow as it brings bug with crossoverriding positioning 
-            // + grid is not really needed as we have single row all handled by slider.
-            // It happens only in woocommerce carousel as of hardcoded Grid in loop-start.php
-            if(isSlideshow) return; 
-	        MK.core.loadDependencies([ MK.core.path.plugins + 'minigrid.js' ], create);
-        };
-
-        // Remove el hidden without adding proper class
-        var prepareForGrid = function prepareForGrid() {
-            var $item = $(this);
-            var isHidden = ($item.css('display') === 'none');
-            if(isHidden) $item.addClass('is-hidden');
-            else $item.removeClass('is-hidden');
-        };
-
-        var create = function create() {
-            var timer = null;
-
-	        function draw() { 
-                // Prevent plugin breaking when feeding it with hidden elements
-                $container.find(config.item).each( prepareForGrid );
-	            minigrid(miniGridConfig);
-	        }
-
-            function redraw() {
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(draw, 100);
-            }
-
-            // init
-	        draw(); 
-            // If reinitializing drop existing event handler
-            $(window).off('resize', redraw);
-            $(window).on('resize', redraw);
-            MK.utils.eventManager.subscribe('item-expanded', redraw);
-            MK.utils.eventManager.subscribe('ajaxLoaded', redraw);
-            MK.utils.eventManager.subscribe('staticFilter', redraw);
-        };
-
-        return {
-         	init : init
-        };
-    };
-
-})(jQuery);
-
-
-
-
-
-
-
-
 (function($, window){
     'use strict';
 
@@ -9832,8 +9890,9 @@ if(typeof exports !== 'undefined') {
         }
 
         function onLoad(e, response) {
-            if(response.id === id) {
-                if( ajaxLoader.getData('paged') >= ajaxLoader.getData('maxPages')) loadingIndicatorHide();
+            if( typeof response !== 'undefined' && response.id === id) {
+                // Checking found posts helps to fix all pagination styles 
+                if( ajaxLoader.getData('found_posts') <= 0 && ajaxLoader.getData('paged') >= ajaxLoader.getData('maxPages')) loadingIndicatorHide();
                 else loadingIndicatorShow();
                 if(response.unique === unique) $container.append(response.content);
                 loadingIndicatorStop();
@@ -10084,7 +10143,7 @@ if(typeof exports !== 'undefined') {
 		},
 
 		onLoad: function success(e, response) {
-			if(response.id === this.containerId) {
+			if( typeof response !== 'undefined' && response.id === this.containerId) {
 				this.updatePagination();
 				this.lastId = this.ajaxLoader.getData('paged');
 
@@ -11884,6 +11943,90 @@ if(typeof exports !== 'undefined') {
 
 
 (function($) {
+	'use strict';
+
+	MK.component.Sortable = function(el) {
+		this.el = el; 
+	};
+
+	MK.component.Sortable.prototype = {
+		init: function init() {
+			this.cacheElements();
+			this.bindEvents();
+		},
+
+		cacheElements: function cacheElements() {
+			this.unique = Date.now();
+			this.$filter = $(this.el);
+			this.config = this.$filter.data('sortable-config');
+
+			this.ajaxLoader = new MK.utils.ajaxLoader(this.config.container);
+			this.ajaxLoader.init();
+
+			this.$container = $( this.config.container );
+			this.$navItems = this.$filter.find('a');
+			this.$filterItems = this.$container.find(this.config.item);
+		},
+
+		bindEvents: function bindEvents() {
+			this.$navItems.on('click', this.handleClick.bind(this));
+			MK.utils.eventManager.subscribe('ajaxLoaded', this.onLoad.bind(this));
+		},
+
+		handleClick: function handleClick(e) {
+			e.preventDefault();
+
+			var $item = $(e.currentTarget);
+			var term = $item.data('filter');
+
+			this.$navItems.removeClass('current');
+			$item.addClass('current');
+
+			if(this.config.mode === 'ajax') this.inDB(term, $item);
+	        else this.inPage(term);
+		},
+
+		inDB: function inDB(term, $item) { 
+			// Add load indicator only for long requests
+			MK.ui.loader.remove(this.$filter);
+			MK.ui.loader.add($item);
+			
+			// If mk-ajax-loaded-posts span exists and one of the filter is clicked,
+			// clear post ids
+			if ( this.$container.siblings('.mk-ajax-loaded-posts').length ) {		
+				this.$container.siblings('.mk-ajax-loaded-posts').attr('data-loop-loaded-posts', '');
+			}
+
+			this.ajaxLoader.setData({
+				paged: 1,
+				term: term
+			});
+            this.ajaxLoader.load(this.unique);
+		},
+
+		inPage: function inPage(term) {
+			var $filterItems = this.$container.find(this.config.item);
+			$filterItems.removeClass('is-hidden'); // show all first
+			if(term !== '*') $filterItems.not('.' + term).addClass('is-hidden'); // hide filtered
+			MK.utils.eventManager.publish('staticFilter');
+		},
+
+		onLoad: function onLoad(e, response) {
+			if(this.config.mode === 'static') {
+				this.$navItems.removeClass('current').first().addClass('current');
+			}
+			if( typeof response !== 'undefined' &&  response.id === this.config.container) {
+				MK.ui.loader.remove(this.$filter);
+				if(response.unique === this.unique) {
+		            this.$container.html(response.content);
+					this.ajaxLoader.setData({paged: 1});
+				}
+			}
+		}
+	};
+
+})(jQuery);
+(function($) {
     'use strict';
 
     MK.component.Tabs = function( el ) {
@@ -11982,84 +12125,6 @@ function mk_tabs_responsive(){
 
 
 (function($) {
-	'use strict';
-
-	MK.component.Sortable = function(el) {
-		this.el = el; 
-	};
-
-	MK.component.Sortable.prototype = {
-		init: function init() {
-			this.cacheElements();
-			this.bindEvents();
-		},
-
-		cacheElements: function cacheElements() {
-			this.unique = Date.now();
-			this.$filter = $(this.el);
-			this.config = this.$filter.data('sortable-config');
-
-			this.ajaxLoader = new MK.utils.ajaxLoader(this.config.container);
-			this.ajaxLoader.init();
-
-			this.$container = $( this.config.container );
-			this.$navItems = this.$filter.find('a');
-			this.$filterItems = this.$container.find(this.config.item);
-		},
-
-		bindEvents: function bindEvents() {
-			this.$navItems.on('click', this.handleClick.bind(this));
-			MK.utils.eventManager.subscribe('ajaxLoaded', this.onLoad.bind(this));
-		},
-
-		handleClick: function handleClick(e) {
-			e.preventDefault();
-
-			var $item = $(e.currentTarget);
-			var term = $item.data('filter');
-
-			this.$navItems.removeClass('current');
-			$item.addClass('current');
-
-			if(this.config.mode === 'ajax') this.inDB(term, $item);
-	        else this.inPage(term);
-		},
-
-		inDB: function inDB(term, $item) { 
-			// Add load indicator only for long requests
-			MK.ui.loader.remove(this.$filter);
-			MK.ui.loader.add($item);
-
-			this.ajaxLoader.setData({
-				paged: 1,
-				term: term
-			});
-            this.ajaxLoader.load(this.unique);
-		},
-
-		inPage: function inPage(term) {
-			var $filterItems = this.$container.find(this.config.item);
-			$filterItems.removeClass('is-hidden'); // show all first
-			if(term !== '*') $filterItems.not('.' + term).addClass('is-hidden'); // hide filtered
-			MK.utils.eventManager.publish('staticFilter');
-		},
-
-		onLoad: function onLoad(e, response) {
-			if(this.config.mode === 'static') {
-				this.$navItems.removeClass('current').first().addClass('current');
-			}
-			if(response.id === this.config.container) {
-				MK.ui.loader.remove(this.$filter);
-				if(response.unique === this.unique) {
-		            this.$container.html(response.content);
-					this.ajaxLoader.setData({paged: 1});
-				}
-			}
-		}
-	};
-
-})(jQuery);
-(function($) {
   'use strict';
 
   $(document).on('click', function(e) {
@@ -12097,6 +12162,20 @@ function mk_tabs_responsive(){
   assignToggle();
   MK.utils.eventManager.subscribe('ajaxLoaded', assignToggle);
   MK.utils.eventManager.subscribe('ajax-preview', assignToggle);
+
+}(jQuery));
+(function($) {
+	'use strict';
+
+	var $iframes = $('iframe');
+
+	$iframes.each(function() {
+		var $iframe = $(this);
+		var parent = $iframe.parent().get(0);
+		var tagName = parent.tagName;
+
+		if(tagName === 'P') $iframe.wrap('<div class="mk-video-container"></div>');
+	});
 
 }(jQuery));
 (function( $ ) {
@@ -12266,20 +12345,6 @@ function product_loop_add_cart() {
 
 }
 
-(function($) {
-	'use strict';
-
-	var $iframes = $('iframe');
-
-	$iframes.each(function() {
-		var $iframe = $(this);
-		var parent = $iframe.parent().get(0);
-		var tagName = parent.tagName;
-
-		if(tagName === 'P') $iframe.wrap('<div class="mk-video-container"></div>');
-	});
-
-}(jQuery));
 (function($) {
     'use strict';
 
