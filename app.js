@@ -60,7 +60,7 @@ var file = require('./routes/file'); //---------add on 161117
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/index', index);
 //app.use('/users', users);
 app.use('/account', account);
 app.use('/profile', profile);
@@ -72,7 +72,29 @@ app.use('/calendar', calendar); //---------add on 161110
 app.use('/file', file); //---------add on 161117
 
 //http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
-app.use("/public", express.static(path.join(__dirname, 'public')));
+//app.use("/", express.static(path.join(__dirname, 'public2')));
+//app.use("/about", express.static(path.join(__dirname, 'public2/abuot')));
+//app.use("/sitemap", express.static(path.join(__dirname, 'public2/sitemap')));
+
+app.get('/', function(req, res) {
+    //res.render('index.html');
+    res.sendfile(__dirname + '/public2/index.html');
+    console.log(cool());
+});
+
+app.get('/about', function(req, res) {
+    //res.render('about.html');
+    res.sendfile(__dirname + '/public2/about.html');
+    console.log(cool());
+});
+
+app.get('/sitemap', function(req, res) {
+    //res.render('sitemap.html');
+    res.sendfile(__dirname + '/public2/sitemap.html');
+    console.log(cool());
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
