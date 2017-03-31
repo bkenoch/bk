@@ -72,28 +72,27 @@ app.use('/calendar', calendar); //---------add on 161110
 app.use('/file', file); //---------add on 161117
 
 //http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
-//app.use("/", express.static(path.join(__dirname, 'public2')));
-//app.use("/about", express.static(path.join(__dirname, 'public2/abuot')));
-//app.use("/sitemap", express.static(path.join(__dirname, 'public2/sitemap')));
+//app.use("/", express.static(path.join(__dirname, 'client')));
+//app.use("/about", express.static(path.join(__dirname, 'client/abuot')));
+//app.use("/sitemap", express.static(path.join(__dirname, 'client/sitemap')));
 
 app.get('/', function(req, res) {
     //res.render('index.html');
-    res.sendfile(__dirname + '/public2/index.html');
+    res.sendfile(__dirname + '/client/index.html');
     console.log(cool());
 });
 
 app.get('/about', function(req, res) {
     //res.render('about.html');
-    res.sendfile(__dirname + '/public2/about.html');
+    res.sendfile(__dirname + '/client/about.html');
     console.log(cool());
 });
 
 app.get('/sitemap', function(req, res) {
     //res.render('sitemap.html');
-    res.sendfile(__dirname + '/public2/sitemap.html');
+    res.sendfile(__dirname + '/client/sitemap.html');
     console.log(cool());
 });
-
 
 
 // catch 404 and forward to error handler
