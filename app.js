@@ -3,45 +3,15 @@ var cool = require('cool-ascii-faces');
 var favicon = require('serve-favicon'); //--------add on 161124
 var app = express();
 var bodyparser = require('body-parser');
-// app.use(bodyparser.urlencoded({ extended: true }));
-// app.use(bodyparser.json());
-
 var path = require('path');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
-//var multer = require('multer');
-//app.use(multer({ dest: './uploads/'}));
-
-//http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser
-//app.use(bodyparser.json({limit: '50mb'}));
-//app.use(bodyparser.urlencoded({limit: '50mb'}));
-//app.use(bodyparser.raw({limit: '50mb'}));
-
-// //Set Request Size Limit
-// app.use(express.limit(100000000));
-// app.use(express.json({limit: '50mb'}));
-// app.use(express.urlencoded({limit: '50mb'}));
 
 app.use(bodyparser.urlencoded({
     extended: true,
     limit: 1024 * 1024 * 20
 }));
 app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
-
-// var jsonParser = bodyparser.json({
-//     limit: 1024 * 1024 * 20
-//     type: 'application/json'
-// });
-// var urlencodedParser = bodyparser.urlencoded({
-//     extended: true,
-//     limit: 1024 * 1024 * 20
-//     //type: 'application/x-www-form-urlencoding'
-// });
-//
-//
-// app.use(jsonParser);
-// app.use(urlencodedParser);
 
 //URL位置
 var index = require('./routes/index');
@@ -55,7 +25,6 @@ var mail = require('./routes/mail'); //---------add on 161030
 var member = require('./routes/member'); //---------add on 161107
 var calendar = require('./routes/calendar'); //---------add on 161110
 var file = require('./routes/file'); //---------add on 161117
-//var public = require('./routes/public'); //---------add on 161117
 
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -72,25 +41,25 @@ app.use('/calendar', calendar); //---------add on 161110
 app.use('/file', file); //---------add on 161117
 
 //http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
-//app.use("/", express.static(path.join(__dirname, 'client')));
-//app.use("/about", express.static(path.join(__dirname, 'client/abuot')));
-//app.use("/sitemap", express.static(path.join(__dirname, 'client/sitemap')));
+//app.use("/", express.static(path.join(__dirname, 'views')));
+//app.use(express.staticProvider(__dirname + '/views'));
 
 app.get('/', function(req, res) {
     //res.render('index.html');
-    res.sendfile(__dirname + '/client/index.html');
+    res.sendfile(__dirname + '/views/index.html');
+    //res.render('index.html');
     console.log(cool());
 });
 
 app.get('/about', function(req, res) {
     //res.render('about.html');
-    res.sendfile(__dirname + '/client/about.html');
+    res.sendfile(__dirname + '/views/about.html');
     console.log(cool());
 });
 
 app.get('/sitemap', function(req, res) {
     //res.render('sitemap.html');
-    res.sendfile(__dirname + '/client/sitemap.html');
+    res.sendfile(__dirname + '/views/sitemap.html');
     console.log(cool());
 });
 
