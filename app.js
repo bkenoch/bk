@@ -61,6 +61,14 @@ app.get('/video', function(req, res) {
     res.sendfile(__dirname + '/views/video.html');
 });
 
+app.get('/emmet', function(req, res) {
+    res.sendfile(__dirname + '/views/emmet.html');
+});
+
+app.get('/rwd', function(req, res) {
+    res.sendfile(__dirname + '/views/rwd.html');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
