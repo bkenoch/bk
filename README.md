@@ -16,5 +16,6 @@ git commit -am "heroku"
 git push heroku master <---push to heroku
 heroku logs --tail   <---see push logs
 ```
-# [ API文件 ](https://cn27529.gitbooks.io/bk-api/content/)  
-# [ DB文件 ](https://cn27529.gitbooks.io/bk-db/content/)  
+
+# [ wp ](http://demos.artbees.net/jupiter5/dialis/)
+# [ vimeo ](https://vimeo.com/dancecology)
