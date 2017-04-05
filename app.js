@@ -29,6 +29,9 @@ var file = require('./routes/file'); //---------add on 161117
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
+//http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
+app.use("/public", express.static(path.join(__dirname, 'public')));
+
 app.use('/index', index);
 //app.use('/users', users);
 app.use('/account', account);
