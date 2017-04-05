@@ -47,20 +47,18 @@ app.use('/file', file); //---------add on 161117
 app.get('/', function(req, res) {
     //res.render('index.html');
     res.sendfile(__dirname + '/views/index.html');
-    //res.render('index.html');
-    console.log(cool());
 });
 
 app.get('/about', function(req, res) {
-    //res.render('about.html');
     res.sendfile(__dirname + '/views/about.html');
-    console.log(cool());
 });
 
 app.get('/sitemap', function(req, res) {
-    //res.render('sitemap.html');
     res.sendfile(__dirname + '/views/sitemap.html');
-    console.log(cool());
+});
+
+app.get('/video', function(req, res) {
+    res.sendfile(__dirname + '/views/video.html');
 });
 
 
