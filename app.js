@@ -65,7 +65,7 @@ app.get('/sitemap', function(req, res) {
 });
 
 app.get('/video', function(req, res) {
-    res.sendfile(__dirname + '/views/video2.html');
+    res.sendfile(__dirname + '/views/video.html');
 });
 
 app.get('/emmet', function(req, res) {
