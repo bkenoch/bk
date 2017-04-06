@@ -19,7 +19,6 @@ var server = http.createServer(app);
 
 /**
  * Sync all defined models to the DB.
- *
  * @param {Object} [options={}]
  * @param {Boolean} [options.force=false] If force is true, each DAO will do DROP TABLE IF EXISTS ..., before it tries to create its own table
  * @param {RegEx} [options.match] Match a regex against the database name before syncing, a safety check for cases where force: true is used in tests but not live code

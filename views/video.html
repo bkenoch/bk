@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style>
-
         video {
             position: fixed;
             top: 50%;
@@ -53,7 +52,16 @@
             background: rgba(0, 0, 0, 0.5);
         }
 
+        #menuBar {
+            opacity: .5;
+        }
     </style>
+
+    <script>
+        $(function() {
+            $('#menuBar').slideUp(1000)
+        })
+    </script>
 
 </head>
 
@@ -100,11 +108,11 @@
 </body>
 
 <style media="screen">
-.jumbotron {
-  padding-top: 30px;
-  padding-bottom: 0px;
-  margin-bottom: 30px;
-}
+    .jumbotron {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
 </style>
 
 </html>
