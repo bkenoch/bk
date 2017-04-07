@@ -76,6 +76,20 @@ app.get('/rwd', function(req, res) {
     res.sendfile(__dirname + '/views/rwd.html');
 });
 
+app.get('/signin', function(req, res) {
+    res.sendfile(__dirname + '/views/signin.html');
+});
+
+
+
+
+
+
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
