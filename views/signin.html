@@ -118,7 +118,10 @@
                     // The signed-in user info.
                     var user = result.user;
                     // ...
-                    console.log(user);
+                    //console.log(user);
+                    var str = JSON.stringify(user);
+                    $('#msg').html(str)
+
                 }).catch(function(error) {
                     // Handle Errors here.
                     var errorCode = error.code;
@@ -127,8 +130,13 @@
                     var email = error.email;
                     // The firebase.auth.AuthCredential type that was used.
                     var credential = error.credential;
+
                     // ...
-                    console.log(error);
+                    //console.log(error);
+
+                    var str = JSON.stringify(user);
+                    $('#msg').html(str)
+
                 });
 
         });
