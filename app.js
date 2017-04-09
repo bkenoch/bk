@@ -80,7 +80,9 @@ app.get('/signin', function(req, res) {
     res.sendfile(__dirname + '/views/signin.html');
 });
 
-
+app.get('/fullscreen', function(req, res) {
+    res.sendfile(__dirname + '/views/fullscreen.html');
+});
 
 
 
