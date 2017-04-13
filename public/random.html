@@ -50,22 +50,29 @@
     };
 
     function my_go(){
-        
         var myHTML;
         myHTML = document.getElementById("val");
         myHTML.innerHTML = my_random_obj.create_random(1);
-        
+    }
+
+    function my_go2(){
+        var myHTML;
         myHTML = document.getElementById("val2");
         var color_codes = [];
         for (var i = 0; i < 10; i++) color_codes.push(my_random_obj.get_color_code());
         myHTML.innerHTML ='';
         for (var i = 0; i < 10; i++) myHTML.innerHTML += '<font color='+ color_codes[i] +'>' + i.toString() + '</font>';
-        
+    }
+
+    function my_go3(){
+        var myHTML;
         myHTML = document.getElementById("val3");
         myHTML.innerHTML = my_random_obj.create_random(4);
     }
 
     setInterval(my_go,1000);
+    setInterval(my_go2,100);
+    setInterval(my_go3,3000);
 
     //var go = document.getElementById('go').addEventListener("click", my_go);
 
