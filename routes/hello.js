@@ -1,4 +1,4 @@
-//var cool = require('cool-ascii-faces');
+var cool = require('cool-ascii-faces');
 
 //Mockup
 var postList = [
@@ -18,14 +18,16 @@ var checkLoginStatus = function(req, res){
 	}
 };
 
-exports.hello = function(req, res){
-	//checkLoginStatus(req, res);
-	// res.render( 'hello', {
-	// 	title : '歡迎來到 Microblog', 
-	// 	//loginStatus : isLogin,
-	// 	posts : postList
-	// });	
+var express = require('express');
+var router = express.Router();
 
-    res.render('hello', { title: '123' });
+router.get('/', function(req, res, next) {
+      res.render('home', 
+		{ 
+			title: 'home',
+			postList: postList
+		}
+	);
+});
 
-};
+module.exports = router;
