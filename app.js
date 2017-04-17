@@ -5,13 +5,18 @@ var app = express();
 var bodyparser = require('body-parser');
 var path = require('path');
 
-app.use(favicon(__dirname + '/public/favicon.ico'));
-
 app.use(bodyparser.urlencoded({
     extended: true,
     limit: 1024 * 1024 * 20
 }));
 app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
+
+//http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
+app.use("/public", express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
+app.set('views', path.join(__dirname, 'views'));//設計頁面模板位置，在views子目錄下
+app.set('view engine', 'ejs');//表明要使用的模板引擎(樣板引擎，Template Engine)是ejs
 
 //URL位置
 var index = require('./routes/index');
@@ -26,14 +31,7 @@ var member = require('./routes/member'); //---------add on 161107
 var calendar = require('./routes/calendar'); //---------add on 161110
 var file = require('./routes/file'); //---------add on 161117
 
-var home = require('./routes/home');
-
-//http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
-app.use("/public", express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs'); //便用EJS模板
-
-//app.use('/', index);
-app.use('/home', home);
+app.use('/', index);
 app.use('/index', index);
 app.use('/account', account);
 app.use('/profile', profile);
@@ -44,52 +42,41 @@ app.use('/member', member);
 app.use('/calendar', calendar);
 app.use('/file', file);
 
-//app.use('/home', home);
+// app.get('/hello', function(req, res) {
+//     res.render('hello', { "title": cool() });
+// });
 
-app.get('/', function(req, res) {
-    res.render('index', { "hello": cool() });
-});
-
-app.get('/home', function(req, res) {
-    res.render('index', { "hello": cool() });
-});
-
-app.get('/about', function(req, res) {
-    res.render('about', { "hello": cool() });
-});
-
-app.get('/sitemap', function(req, res) {
-    res.render('sitemap', { "hello": cool() });
-});
-
-app.get('/video', function(req, res) {
-    res.render('video', { "hello": cool() });
-});
-
-app.get('/emmet', function(req, res) {
-    res.render('emmet', { "hello": cool() });
-});
-
-app.get('/rwd', function(req, res) {
-    res.render('rwd', { "hello": cool() });
-});
-
-app.get('/signin', function(req, res) {
-    res.render('signin', { "hello": cool() });
-});
-
-app.get('/fullscreen', function(req, res) {
-    res.render('fullscreen', { "hello": cool() });
-});
+var hello = require('./routes/hello2');
+app.get('/hello', hello.hello);
 
 
+// app.get('/hello', function(req, res) {
+//     res.render('hello', { "title": cool() });
+// });
 
+// app.get('/sitemap', function(req, res) {
+//     res.render('sitemap', { "hello": cool() });
+// });
 
+// app.get('/video', function(req, res) {
+//     res.render('video', { "hello": cool() });
+// });
 
+// app.get('/emmet', function(req, res) {
+//     res.render('emmet', { "hello": cool() });
+// });
 
+// app.get('/rwd', function(req, res) {
+//     res.render('rwd', { "hello": cool() });
+// });
 
+// app.get('/signin', function(req, res) {
+//     res.render('signin', { "hello": cool() });
+// });
 
-
+// app.get('/fullscreen', function(req, res) {
+//     res.render('fullscreen', { "hello": cool() });
+// });
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
