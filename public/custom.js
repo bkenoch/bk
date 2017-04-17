@@ -1,5 +1,18 @@
 $(document).ready(function (){
 
+    
+
+    function hide_menu(){
+    //收起目錄
+        //collapse navbar-collapse
+        //$('#bs-example-navbar-collapse-1').hide()
+        $('#bs-example-navbar-collapse-1').on('hidden.bs.collapse', function (e) {
+            alert('Event fired on #' + e.currentTarget.id);
+        })
+    }
+
+   
+
     /* 平順捲動的動作 */
     //$('a[href*=#]:not([href=#])').click(function() {
     $("a[href^='#']").click(function() {
@@ -18,9 +31,6 @@ $(document).ready(function (){
             }
         }
 
-        //收起目錄
-        //collapse navbar-collapse
-        
 
     });
 
