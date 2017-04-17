@@ -51,6 +51,8 @@ app.use('/member', member);
 app.use('/calendar', calendar);
 app.use('/file', file);
 
+app.use('/hello', hello);
+
 app.use('/', home);
 app.use('/index', home);
 app.use('/home', home);
@@ -59,6 +61,8 @@ app.use('/hello', hello);
 app.use('/about', about);
 app.use('/sitemap', sitemap);
 app.use('/video', video);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
