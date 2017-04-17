@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
       res.render('onepage', 
 		{ 
-			title: 'onepage'
+			title: '舞蹈生態系創意團隊｜Dancecology｜onepage'
 		}
 	);
 });
