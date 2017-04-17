@@ -39,6 +39,8 @@ var hello = require('./routes/hello');
 var about = require('./routes/about');
 var sitemap = require('./routes/sitemap');
 var video = require('./routes/video');
+var random = require('./routes/random');
+var onepage = require('./routes/onepage');
 
 //app.use('/', index);
 //app.use('/index', index);
@@ -53,7 +55,8 @@ app.use('/file', file);
 
 app.use('/hello', hello);
 
-app.use('/', home);
+//app.use('/', home);
+app.use('/', onepage);
 app.use('/index', home);
 app.use('/home', home);
 app.use('/users', users);
@@ -61,7 +64,8 @@ app.use('/hello', hello);
 app.use('/about', about);
 app.use('/sitemap', sitemap);
 app.use('/video', video);
-
+app.use('/random', random);
+app.use('/onepage', onepage);
 
 
 // catch 404 and forward to error handler
