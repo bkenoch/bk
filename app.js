@@ -26,12 +26,12 @@ var index = require('./routes/index');
 var account = require('./routes/account');
 var profile = require('./routes/profile');
 var note = require('./routes/note');
-var photo = require('./routes/photo'); //--------add on 161027
+var photo = require('./routes/photo'); 
 
-var mail = require('./routes/mail'); //---------add on 161030
-var member = require('./routes/member'); //---------add on 161107
-var calendar = require('./routes/calendar'); //---------add on 161110
-var file = require('./routes/file'); //---------add on 161117
+var mail = require('./routes/mail'); 
+var member = require('./routes/member');
+var calendar = require('./routes/calendar'); 
+var file = require('./routes/file');
 
 var users = require('./routes/users');
 var home = require('./routes/home');
