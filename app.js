@@ -28,9 +28,9 @@ var profile = require('./routes/profile');
 var note = require('./routes/note');
 var photo = require('./routes/photo');
 
-var mail = require('./routes/mail'); 
+var mail = require('./routes/mail');
 var member = require('./routes/member');
-var calendar = require('./routes/calendar'); 
+var calendar = require('./routes/calendar');
 var file = require('./routes/file');
 
 var users = require('./routes/users');
@@ -67,9 +67,14 @@ app.use('/video', video);
 app.use('/random', random);
 app.use('/onepage', onepage);
 
+app.get('/xlsx', function (req, res) {
+    console.log('xlsx')
+    res.sendFile(path.join(__dirname + '/xlsx/README.md'));
+});
+
 // catch 404 and forward to error handler
-app.use(function(err, req, res, next) {
-    
+app.use(function (err, req, res, next) {
+
     res.status(404);
     //next(err);
     //res.render('error', {err: err});
@@ -80,7 +85,7 @@ app.use(function(err, req, res, next) {
 
 // error handler
 // no stacktraces leaked to user unless in development environment
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
 
     res.status(err.status || 500);
     res.json({
