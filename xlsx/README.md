@@ -30,6 +30,7 @@ node xlsx.js 要匯入的檔案名稱.xlsx
 ```
 
 # More Infos
-[常用會計科目表] (http://web.cjcu.edu.tw/~vicky/acc/table1.pdf)
+[會計傳票範例] (http://www.hvsoper.com/show/e/008063)
+
 
 
