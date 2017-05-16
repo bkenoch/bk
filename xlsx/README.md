@@ -15,7 +15,7 @@
 
 # 切換路徑
 切換到xlsx路徑位置
-```sh
+```shell
 
 cd xlsx
 
@@ -23,7 +23,7 @@ cd xlsx
 
 # 匯入指令
 
-```sh
+```shell
 
 node xlsx.js 要匯入的檔案名稱.xlsx
 
