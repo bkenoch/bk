@@ -4,7 +4,7 @@
 var args = require('./args');
 var filepath = require('./filepath');
 var XLSX = require('xlsx');
-var settings_json = require("../data/settings.json");
+var json_settings = require("../data/settings.json");
 
 var arg_obj = new args(); //參數物件
 
@@ -14,10 +14,12 @@ if (!arg_obj.isok) {
 }
 
 //args ok, do something
-var myFilepath = settings_json.importpath + arg_obj.filename;
+var myFilepath = json_settings.importpath + arg_obj.filename;
+
+//console.log(myFilepath); return;
 
 var workbook = XLSX.readFile(myFilepath);
-//console.log(workbook);
+//console.log(workbook); return;
 
 var first_sheet_name = workbook.SheetNames[1];
 //var address_of_cell = 'A1';
@@ -33,11 +35,11 @@ var ws = workbook.Sheets[first_sheet_name];
 //console.log(ws);
 
 //var mysheet = XLSX.utils.sheet_to_formulae(ws);
-//var mysheet_items = XLSX.utils.sheet_to_json(ws, {header:0, raw:true});
-var mysheet_items = XLSX.utils.sheet_to_json(ws, { header: 1 });
+var mysheet_items = XLSX.utils.sheet_to_json(ws, {header:0, raw:true});
+//var mysheet_items = XLSX.utils.sheet_to_json(ws, { header: 1 });
 //var mysheet_items = XLSX.utils.sheet_to_csv(ws, {header:0, raw:true});
-//console.log(mysheet_items[0]);
-console.log(JSON.stringify(mysheet_items[0]))
+console.log(mysheet_items);
+//console.log(JSON.stringify(mysheet_items[0])); 
 return;
 
 var mysheet = {};

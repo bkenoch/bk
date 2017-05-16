@@ -26,7 +26,7 @@ var index = require('./routes/index');
 var account = require('./routes/account');
 var profile = require('./routes/profile');
 var note = require('./routes/note');
-var photo = require('./routes/photo'); 
+var photo = require('./routes/photo');
 
 var mail = require('./routes/mail'); 
 var member = require('./routes/member');
@@ -66,7 +66,6 @@ app.use('/sitemap', sitemap);
 app.use('/video', video);
 app.use('/random', random);
 app.use('/onepage', onepage);
-
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {

@@ -1,7 +1,7 @@
 var args = require('./args');
 var filepath = require('./filepath');
 var XLSX = require('xlsx');
-var settings_json = require("../data/settings.json");
+var json_settings = require("../data/settings.json");
 
 var arg_obj = new args(); //參數物件
 
@@ -11,7 +11,7 @@ if (!arg_obj.isok) {
 }
 
 //args ok, do something
-var myFilepath = settings_json.importpath + arg_obj.filename;
+var myFilepath = json_settings.importpath + arg_obj.filename;
 var fp_obj = new filepath(myFilepath);
 //var fp_obj = new filepath(); fp_obj.setPath(myFilepath);
 if (!fp_obj.isok) {
