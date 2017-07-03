@@ -42,6 +42,9 @@ var video = require('./routes/video');
 var random = require('./routes/random');
 var onepage = require('./routes/onepage');
 
+var signin = require('./routes/signin');
+
+
 //app.use('/', index);
 //app.use('/index', index);
 app.use('/account', account);
@@ -66,6 +69,8 @@ app.use('/sitemap', sitemap);
 app.use('/video', video);
 app.use('/random', random);
 app.use('/onepage', onepage);
+
+app.use('/signin', signin);
 
 app.get('/xlsx', function (req, res) {
     console.log('xlsx')
