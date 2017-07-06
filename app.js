@@ -15,10 +15,9 @@ app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
 app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
-//app.set('views', path.join(__dirname, 'views'));//設計頁面模板位置，在views子目錄下
-//app.set('view engine', 'ejs');//表明要使用的模板引擎(樣板引擎，Template Engine)是ejs
-app.set('views', './views'); // specify the views directory
-app.set('view engine', 'ejs'); // register the template engine
+app.set('views', path.join(__dirname, 'views')); //設計頁面模板位置，在views子目錄下
+//app.set('view engine', 'ejs');//表明要使用的模板引擎
+app.set('view engine', 'pug');
 
 //URL位置
 var index = require('./routes/index');
@@ -58,8 +57,8 @@ app.use('/file', file);
 
 app.use('/hello', hello);
 
-//app.use('/', home);
-app.use('/', onepage);
+app.use('/', home);
+//app.use('/', onepage);
 app.use('/index', home);
 app.use('/home', home);
 app.use('/users', users);

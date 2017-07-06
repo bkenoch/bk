@@ -24,7 +24,8 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
       res.render('index', 
 		{ 
-			title: 'index',
+			//title: 'index',
+			title: cool(),
 			postList: postList
 		}
 	);
