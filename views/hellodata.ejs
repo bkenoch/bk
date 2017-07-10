@@ -47,21 +47,21 @@
             </nav>
             <div class="jumbotron" style="">
                 <div class="container">
-                  <h1><%=title%></h1>                  
+                  <h1><%=title%></h1>
                   <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th>NO.</th>
-                        <th>name</th>
-                        <th>description</th>
+                        <th>email</th>
+                        <th>password</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% for(var i=0; i < postList.length; i++) { %>
                       <tr>
                        <td><%= postList[i].id %></td>
-                       <td><%= postList[i].name %></td>
-                        <td><%= postList[i].description %></td>
+                       <td><%= postList[i].email %></td>
+                        <td><%= postList[i].password %></td>
                        </tr>
                        <% } %>
                     </tbody>                    

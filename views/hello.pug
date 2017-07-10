@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 #{title}
+  table(class="table table-bordered")
+    thead
+      tr
+        th="NO."
+        th="name"
+        th="description"
+    tbody
+      each val, index in postList
+        tr
+          td #{val.id}
+          td #{val.name}
+          td #{val.description}

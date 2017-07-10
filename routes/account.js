@@ -121,7 +121,7 @@ router.post('/login', function(req, res) {
             json.err = "";
         }
 
-        //更新member資料
+        //更新member資料
         models.Member.findOne({
             where: {
                 email: data.email,

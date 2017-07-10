@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
+  
 <body>
     <div id="wrap">
         <nav class="navbar navbar-inverse navbar-fixed-top" id="menuBar" style="margin-bottom:0px;">
@@ -47,32 +48,13 @@
             </nav>
             <div class="jumbotron" style="">
                 <div class="container">
-                  <h1><%=title%></h1>                  
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>NO.</th>
-                        <th>name</th>
-                        <th>description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% for(var i=0; i < postList.length; i++) { %>
-                      <tr>
-                       <td><%= postList[i].id %></td>
-                       <td><%= postList[i].name %></td>
-                        <td><%= postList[i].description %></td>
-                       </tr>
-                       <% } %>
-                    </tbody>                    
-                  </table>
-                  
+  <%- body %>
+  <%- script %>
                 </div>
             </div>
     </div>
-    
-</body>
 
+</body>
 <style>
 
     html, body {

@@ -47,25 +47,20 @@
             </nav>
             <div class="jumbotron" style="">
                 <div class="container">
-                  <h1><%=title%></h1>                  
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>NO.</th>
-                        <th>name</th>
-                        <th>description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% for(var i=0; i < postList.length; i++) { %>
-                      <tr>
-                       <td><%= postList[i].id %></td>
-                       <td><%= postList[i].name %></td>
-                        <td><%= postList[i].description %></td>
-                       </tr>
-                       <% } %>
-                    </tbody>                    
-                  </table>
+                  <h1><%=title%></h1>
+                  
+                  <h2>Form control: input</h2>
+                  <p>The form below contains two input elements; one of type text and one of type password:</p>
+                  <form>
+                    <div class="form-group">
+                      <label for="usr">Name:</label>
+                      <input type="text" class="form-control" id="usr">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Password:</label>
+                      <input type="password" class="form-control" id="pwd">
+                    </div>
+                  </form>
                   
                 </div>
             </div>

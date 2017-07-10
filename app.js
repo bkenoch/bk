@@ -16,8 +16,12 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('views', path.join(__dirname, 'views')); //設計頁面模板位置，在views子目錄下
-//app.set('view engine', 'ejs');//表明要使用的模板引擎
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');//表明要使用的模板引擎
+//app.set('view engine', 'pug');
+
+//var expressLayouts = require('express-ejs-layouts');
+//app.use(expressLayouts);
+//app.set("layout extractScripts", true)
 
 //URL位置
 var index = require('./routes/index');
@@ -34,7 +38,6 @@ var file = require('./routes/file');
 
 var users = require('./routes/users');
 var home = require('./routes/home');
-var hello = require('./routes/hello');
 var about = require('./routes/about');
 var sitemap = require('./routes/sitemap');
 var video = require('./routes/video');
@@ -42,7 +45,7 @@ var random = require('./routes/random');
 var onepage = require('./routes/onepage');
 
 var signin = require('./routes/signin');
-
+var hello = require('./routes/hello');
 
 //app.use('/', index);
 //app.use('/index', index);
@@ -55,14 +58,12 @@ app.use('/member', member);
 app.use('/calendar', calendar);
 app.use('/file', file);
 
-app.use('/hello', hello);
-
-app.use('/', home);
+app.use('/', hello);
 //app.use('/', onepage);
 app.use('/index', home);
 app.use('/home', home);
 app.use('/users', users);
-app.use('/hello', hello);
+
 app.use('/about', about);
 app.use('/sitemap', sitemap);
 app.use('/video', video);
@@ -70,6 +71,8 @@ app.use('/random', random);
 app.use('/onepage', onepage);
 
 app.use('/signin', signin);
+
+app.use('/hello', hello);
 
 app.get('/xlsx', function (req, res) {
     console.log('xlsx')
