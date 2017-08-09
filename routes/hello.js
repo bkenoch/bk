@@ -60,12 +60,12 @@ router.get('/read', function(req, res, next) {
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
         if (data == null) data = [];
         //res.json(data);
-				res.render('hellodata',
-					{ 
-						title: 'hello get DB data',
-						postList: data
-					}
-				);
+		res.render('hellodata',
+			{ 
+				title: 'hello get DB data',
+				postList: data
+			}
+		);
 
     }).catch(function(err) {
         console.log(err);

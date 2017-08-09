@@ -16,7 +16,7 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('views', path.join(__dirname, 'views')); //設計頁面模板位置，在views子目錄下
-app.set('view engine', 'ejs');//表明要使用的模板引擎
+app.set('view engine', 'ejs'); //表明要使用的模板引擎
 //app.set('view engine', 'pug');
 
 //var expressLayouts = require('express-ejs-layouts');
