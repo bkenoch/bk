@@ -4,27 +4,42 @@ block content
 
   script.
     // 初始化 Firebase
-      var config = {
-          apiKey: "AIzaSyAg0tGWsKqtjZcRnFPrBroVn8r111Q4EKY",
-          authDomain: "bkappdb.firebaseapp.com",
-          databaseURL: "https://bkappdb.firebaseio.com",
-          storageBucket: "bkappdb.appspot.com",
-        };
-      firebase.initializeApp(config);
-
-      // 建立 DB
-      var database = firebase.database();
+    var config = {
+        apiKey: "AIzaSyAg0tGWsKqtjZcRnFPrBroVn8r111Q4EKY",
+        authDomain: "bkappdb.firebaseapp.com",
+        databaseURL: "https://bkappdb.firebaseio.com",
+        storageBucket: "bkappdb.appspot.com",
+      };
+    firebase.initializeApp(config);
 
     //alert('123')
     function writeUserData(userId, name, email) {
       
-      var users=[];
+      var today = new Date();
+      var str = today.toGMTString();
 
-      database.database().ref(users).set({
-        userid :userId,
+      var now = new Date;
+      var utc_timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
+        now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+
+var t = new Date(1502267619349);
+      t = new Date();
+      //var formatted = t.format("yyyy.mm.dd hh:MM:ss");
+
+          var db_path = "users/"+userId;
+
+      var ref = firebase.database().ref(db_path);
+
+      var user = {
+        userid: userId,
         username: name,
-        email: email
-      });
+        email: email,
+        //timestamp: now.toLocaleString()
+        timestamp: t.toISOString()
+      }
+
+      var pushed = ref.set(user);
+      console.log(pushed)
 
     }
 
@@ -56,7 +71,7 @@ block content
 
   h1 Firebase Realtime Database
   h3 建立使用者帳號
-  input(type="text" id="create_id" placeholder="ID" value="123")
+  input(type="text" id="create_id" placeholder="ID" value="170810")
   input(type="text" id="create_email" placeholder="Email" value="cn27529@hotmail.com")
   input(type="text" id="create_name" placeholder="名稱" value="cn27529")
   input(type="button" id="create_user" value="建立")

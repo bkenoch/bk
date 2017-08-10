@@ -20,7 +20,7 @@
     firebase.initializeApp(config);
 
     // 建立 DB
-    var database = firebase.database();
+    var db = firebase.database();
 
     function writeUserData(userId, name, email) {
 
@@ -56,6 +56,7 @@
         writeUserData(id, name, email);
       });
     });
+    
   </script>
 </head>
 
