@@ -22,11 +22,11 @@ block content
       var utc_timestamp = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
         now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
 
-var t = new Date(1502267619349);
+      var t = new Date(1502267619349);
       t = new Date();
       //var formatted = t.format("yyyy.mm.dd hh:MM:ss");
 
-          var db_path = "users/"+userId;
+      var db_path = "users/"+userId;
 
       var ref = firebase.database().ref(db_path);
 
