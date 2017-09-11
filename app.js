@@ -16,8 +16,8 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('views', path.join(__dirname, 'views')); //設計頁面模板位置，在views子目錄下
-//app.set('view engine', 'ejs'); //表明要使用的模板引擎
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs'); //表明要使用的模板引擎
+//app.set('view engine', 'pug');
 
 //var expressLayouts = require('express-ejs-layouts');
 //app.use(expressLayouts);
@@ -47,6 +47,8 @@ var onepage = require('./routes/onepage');
 var signin = require('./routes/signin');
 var hello = require('./routes/hello');
 
+var weather = require('./routes/weather');
+
 //app.use('/', index);
 //app.use('/index', index);
 app.use('/account', account);
@@ -58,7 +60,8 @@ app.use('/member', member);
 app.use('/calendar', calendar);
 app.use('/file', file);
 
-app.use('/', hello);
+//app.use('/', hello);
+app.use('/', weather);
 //app.use('/', onepage);
 app.use('/index', home);
 app.use('/home', home);
@@ -78,6 +81,8 @@ app.get('/xlsx', function (req, res) {
     console.log('xlsx')
     res.sendFile(path.join(__dirname + '/xlsx/README.md'));
 });
+
+app.use('/weather', weather);
 
 // catch 404 and forward to error handler
 app.use(function (err, req, res, next) {
