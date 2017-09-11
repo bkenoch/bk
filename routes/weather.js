@@ -5,24 +5,38 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('weather', { title: 'weather' });
+
+    //res.render('weathers', { title: 'weather' });
+    var json = {
+            id: 0,
+            msg: "沒有資料",
+            err: '',
+            data: '',
+            title: 'weather',
+            weather_flag: '',
+        }
+        //res.json(json);
+    res.render('weather', json);
+
 });
 
 
-router.get('/:code', function(req, res) {
-    
-        var weather_code = req.params.code;
-        //var token = req.params.token; //先不檢查
-    
-        var json = {
-            id: 0,
-            weather_code: "",
-            msg: "沒有資料",
-            err: ""
-        }
-    
-        res.json(json);
-    
-    });
+router.get('/:flag', function(req, res) {
+
+    var weather_flag = req.params.flag;
+    //var token = req.params.token; //先不檢查
+
+    var json = {
+        id: 0,
+        msg: "沒有資料",
+        err: '',
+        data: '',
+        title: 'weather',
+        weather_flag: '',
+    }
+
+    res.json(json);
+
+});
 
 module.exports = router;

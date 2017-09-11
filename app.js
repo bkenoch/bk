@@ -77,7 +77,7 @@ app.use('/signin', signin);
 
 app.use('/hello', hello);
 
-app.get('/xlsx', function (req, res) {
+app.get('/xlsx', function(req, res) {
     console.log('xlsx')
     res.sendFile(path.join(__dirname + '/xlsx/README.md'));
 });
@@ -85,7 +85,7 @@ app.get('/xlsx', function (req, res) {
 app.use('/weather', weather);
 
 // catch 404 and forward to error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
 
     res.status(404);
     //next(err);
@@ -97,7 +97,7 @@ app.use(function (err, req, res, next) {
 
 // error handler
 // no stacktraces leaked to user unless in development environment
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
 
     res.status(err.status || 500);
     res.json({
