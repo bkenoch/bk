@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-data-firebase/3.0.0/js-data-firebase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-data-firebase/3.0.0/js-data-firebase.js"></script>
 
     <script>
         var firebase = require('firebase');
@@ -25,6 +25,8 @@
         // 建立 DB
         var db = firebase.database();
         var weathers_ref = db.ref('weathers')
+
+        console.log(weathers_ref)
 
         // create Vue app
         var app = new Vue({
