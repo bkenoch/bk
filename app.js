@@ -49,6 +49,8 @@ var hello = require('./routes/hello');
 
 var weather = require('./routes/weather');
 
+var site_line_chat = require('./routes/site-line-chat');
+
 //app.use('/', index);
 //app.use('/index', index);
 app.use('/account', account);
@@ -83,6 +85,8 @@ app.get('/xlsx', function(req, res) {
 });
 
 app.use('/weather', weather);
+
+app.use('/site-line-chat', site_line_chat);
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {

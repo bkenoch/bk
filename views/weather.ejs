@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
+=======
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-data-firebase/3.0.0/js-data-firebase.js"></script>
+>>>>>>> ee104059f19a05797afd187fe97c26205d7948c0
 
     <script>
         //alert('1111111')
@@ -25,6 +29,7 @@
         // 建立 DB
         var db = firebase.database()
 
+<<<<<<< HEAD
         //var weathers_ref = ;
 
         // firebase.database().ref('/weathers/tw-Changhua_County').on('value', function(data) {
@@ -85,6 +90,55 @@
         //         // }
         //     }
         // })
+=======
+        console.log(weathers_ref)
+
+        // create Vue app
+        var app = new Vue({
+            // element to mount to
+            el: '#app',
+            // initial data
+            data: {
+                // newUser: {
+                //     name: '',
+                //     email: ''
+                // }
+            },
+            // firebase binding
+            // https://github.com/vuejs/vuefire
+            firebase: {
+                weathers: weathers_ref
+            },
+            // computed property for form validation state
+            computed: {
+                validation: function() {
+                    return {
+                        //name: !!this.newUser.name.trim(),
+                        //email: emailRE.test(this.newUser.email)
+                    }
+                },
+                // isValid: function() {
+                //     var validation = this.validation
+                //     return Object.keys(validation).every(function(key) {
+                //         return validation[key]
+                //     })
+                // }
+            },
+            // methods
+            methods: {
+                // addUser: function() {
+                //     // if (this.isValid) {
+                //     //     usersRef.push(this.newUser)
+                //     //     this.newUser.name = ''
+                //     //     this.newUser.email = ''
+                //     // }
+                // },
+                // removeUser: function(user) {
+                //     //usersRef.child(user['.key']).remove()
+                // }
+            }
+        })
+>>>>>>> ee104059f19a05797afd187fe97c26205d7948c0
     </script>
 </head>
 
