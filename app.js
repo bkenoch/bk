@@ -48,8 +48,7 @@ var signin = require('./routes/signin');
 var hello = require('./routes/hello');
 
 var weather = require('./routes/weather');
-
-var site_line_chat = require('./routes/site-line-chat');
+var sitelinechat = require('./routes/sitelinechat');
 
 //app.use('/', index);
 //app.use('/index', index);
@@ -63,7 +62,6 @@ app.use('/calendar', calendar);
 app.use('/file', file);
 
 //app.use('/', hello);
-app.use('/', weather);
 //app.use('/', onepage);
 app.use('/index', home);
 app.use('/home', home);
@@ -85,8 +83,7 @@ app.get('/xlsx', function(req, res) {
 });
 
 app.use('/weather', weather);
-
-app.use('/site-line-chat', site_line_chat);
+app.use('/site-line-chat', sitelinechat);
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {

@@ -16,7 +16,9 @@ router.get('/', function(req, res, next) {
             weather_flag: '',
         }
         //res.json(json);
-    res.render('weather', json);
+        //res.render('weather', json);
+
+    res.render('weather', { title: 'weather' });
 
 });
 
