@@ -80,6 +80,19 @@
 
 
     })
+
+    function myObj() {
+        this.name = '';
+        this.email = '';
+    }
+
+    myObj.prototype.init = function() {
+        return new myObj()
+    }
+
+    var qq = myObj.init();
+
+    console.log(qq.toString())
 </script>
 
 </html>
