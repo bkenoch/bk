@@ -25,9 +25,9 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-      res.render('hello',   //view name
+      res.render('hello', 
 		{ 
-			title: 'three555hello',
+			title: 'hello',
 			postList: postList
 		}
 	);

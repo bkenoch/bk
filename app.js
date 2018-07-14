@@ -40,7 +40,7 @@ var users = require('./routes/users');
 var home = require('./routes/home');
 var about = require('./routes/about');
 var sitemap = require('./routes/sitemap');
-var video = require('./routes/video');
+var video = require('./routes/video_rt');
 var random = require('./routes/random');
 var onepage = require('./routes/onepage');
 
@@ -69,13 +69,13 @@ app.use('/users', users);
 
 app.use('/about', about);
 app.use('/sitemap', sitemap);
-app.use('/video', video);
+app.use('/vi', video);
 app.use('/random', random);
 app.use('/onepage', onepage);
 
 app.use('/signin', signin);
 
-app.use('/hello', hello);
+app.use('/', onepage);
 
 app.get('/xlsx', function(req, res) {
     console.log('xlsx')
